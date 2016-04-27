@@ -91,7 +91,7 @@ public class ImageGridAdapter extends BaseAdapter {
     public View getView(final int position, View convertView, ViewGroup parent) {
         int itemViewType = getItemViewType(position);
         if (itemViewType == ITEM_TYPE_CAMERA) {
-            convertView = LayoutInflater.from(mActivity).inflate(R.layout.adapter_camera_item, parent, false);
+            convertView = LayoutInflater.from(mActivity).inflate(R.layout.ip_adapter_camera_item, parent, false);
             convertView.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, mImageSize)); //让图片是个正方形
             convertView.setTag(null);
             convertView.setOnClickListener(new View.OnClickListener() {
@@ -103,7 +103,7 @@ public class ImageGridAdapter extends BaseAdapter {
         } else {
             final ViewHolder holder;
             if (convertView == null) {
-                convertView = LayoutInflater.from(mActivity).inflate(R.layout.adapter_image_list_item, parent, false);
+                convertView = LayoutInflater.from(mActivity).inflate(R.layout.ip_adapter_image_list_item, parent, false);
                 convertView.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, mImageSize)); //让图片是个正方形
                 holder = new ViewHolder(convertView);
                 convertView.setTag(holder);
@@ -123,7 +123,7 @@ public class ImageGridAdapter extends BaseAdapter {
                 public void onClick(View v) {
                     int selectLimit = imagePicker.getSelectLimit();
                     if (holder.cbCheck.isChecked() && mSelectedImages.size() >= selectLimit) {
-                        Toast.makeText(mActivity, mActivity.getString(R.string.select_limit, selectLimit), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mActivity, mActivity.getString(R.string.ip_select_limit, selectLimit), Toast.LENGTH_SHORT).show();
                         holder.cbCheck.setChecked(false);
                         holder.mask.setVisibility(View.GONE);
                     } else {

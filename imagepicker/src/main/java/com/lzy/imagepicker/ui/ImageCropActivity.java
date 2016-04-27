@@ -8,7 +8,6 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.R;
@@ -31,17 +30,17 @@ public class ImageCropActivity extends ImageBaseActivity implements View.OnClick
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_image_crop);
+        setContentView(R.layout.ip_activity_image_crop);
 
         imagePicker = ImagePicker.getInstance();
 
         //初始化View
         findViewById(R.id.btn_back).setOnClickListener(this);
         Button btn_ok = (Button) findViewById(R.id.btn_ok);
-        btn_ok.setText(getString(R.string.complete));
+        btn_ok.setText(getString(R.string.ip_complete));
         btn_ok.setOnClickListener(this);
         TextView tv_des = (TextView) findViewById(R.id.tv_des);
-        tv_des.setText(getString(R.string.photo_crop));
+        tv_des.setText(getString(R.string.ip_photo_crop));
         mCropImageView = (CropImageView) findViewById(R.id.cv_crop_image);
         mCropImageView.setOnBitmapSaveCompleteListener(this);
 

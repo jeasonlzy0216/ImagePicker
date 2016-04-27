@@ -11,9 +11,9 @@
         android:layout_width="48dp"
         android:layout_height="match_parent"
         android:layout_centerVertical="true"
-        android:background="@drawable/selector_back_press"
+        android:background="@drawable/ip_selector_back_press"
         android:padding="14dp"
-        android:src="@mipmap/ic_back"/>
+        android:src="@mipmap/ip_ic_back"/>
 
     <View
         android:layout_width="1px"
@@ -42,7 +42,7 @@
         android:layout_centerVertical="true"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:background="@drawable/selector_top_ok"
+        android:background="@drawable/ip_selector_top_ok"
         android:minHeight="30dp"
         android:minWidth="50dp"
         android:padding="8dp"

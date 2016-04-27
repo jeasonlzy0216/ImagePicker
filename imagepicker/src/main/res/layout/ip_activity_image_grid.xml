@@ -6,7 +6,7 @@
 
     <include
         android:id="@+id/top_bar"
-        layout="@layout/include_top_bar"/>
+        layout="@layout/ip_include_top_bar"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -42,7 +42,7 @@
                 android:layout_centerVertical="true"
                 android:background="@null"
                 android:drawablePadding="4dp"
-                android:drawableRight="@mipmap/text_indicator"
+                android:drawableRight="@mipmap/ip_text_indicator"
                 android:ellipsize="end"
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"

@@ -6,7 +6,7 @@
               android:background="#000"
               android:orientation="vertical">
 
-    <include layout="@layout/include_top_bar"/>
+    <include layout="@layout/ip_include_top_bar"/>
 
    <!-- <com.lzy.imagepicker.view.CropImageView
         android:id="@+id/cv_crop_image"
