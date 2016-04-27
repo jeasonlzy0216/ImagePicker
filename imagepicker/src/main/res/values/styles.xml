@@ -11,13 +11,13 @@
 
     <!--SuperCheckbox的样式-->
     <style name="SuperCheckboxTheme" parent="@android:style/Widget.CompoundButton.CheckBox">
-        <item name="android:button">@drawable/selector_item_checked</item>
+        <item name="android:button">@drawable/ip_selector_item_checked</item>
     </style>
 
     <style name="popupwindow_anim_style">
         <!-- 指定显示的动画xml -->
-        <item name="android:windowEnterAnimation">@anim/show_from_bottom</item>
+        <item name="android:windowEnterAnimation">@anim/ip_show_from_bottom</item>
         <!-- 指定消失的动画xml -->
-        <item name="android:windowExitAnimation">@anim/hide_to_bottom</item>
+        <item name="android:windowExitAnimation">@anim/ip_hide_to_bottom</item>
     </style>
 </resources>

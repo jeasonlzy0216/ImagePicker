@@ -12,7 +12,7 @@
         android:layout_height="68dp"
         android:layout_margin="8dp"
         android:scaleType="centerCrop"
-        android:src="@mipmap/default_image"/>
+        android:src="@mipmap/ip_default_image"/>
 
     <LinearLayout
         android:layout_width="0dp"
@@ -25,7 +25,7 @@
             android:id="@+id/tv_folder_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/all_images"
+            android:text="@string/ip_all_images"
             android:textColor="@android:color/black"
             android:textSize="18sp"/>
 
@@ -45,6 +45,6 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:src="@mipmap/list_selected"/>
+        android:src="@mipmap/ip_list_selected"/>
 
 </LinearLayout>

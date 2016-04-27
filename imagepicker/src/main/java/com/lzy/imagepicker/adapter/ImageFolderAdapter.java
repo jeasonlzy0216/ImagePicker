@@ -67,7 +67,7 @@ public class ImageFolderAdapter extends BaseAdapter {
     }
 
     public int getItemViewHeight() {
-        View itemView = mInflater.inflate(R.layout.adapter_folder_list_item, null);
+        View itemView = mInflater.inflate(R.layout.ip_adapter_folder_list_item, null);
         itemView.measure(0, 0);
         return itemView.getMeasuredHeight();
     }
@@ -76,7 +76,7 @@ public class ImageFolderAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
         if (convertView == null) {
-            convertView = mInflater.inflate(R.layout.adapter_folder_list_item, parent, false);
+            convertView = mInflater.inflate(R.layout.ip_adapter_folder_list_item, parent, false);
             holder = new ViewHolder(convertView);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -84,7 +84,7 @@ public class ImageFolderAdapter extends BaseAdapter {
 
         ImageFolder folder = getItem(position);
         holder.folderName.setText(folder.name);
-        holder.imageCount.setText(mActivity.getString(R.string.folder_image_count, folder.images.size()));
+        holder.imageCount.setText(mActivity.getString(R.string.ip_folder_image_count, folder.images.size()));
         imagePicker.getImageLoader().displayImage(mActivity, folder.cover.path, holder.cover, mImageSize, mImageSize);
 
         if (lastSelected == position) {
