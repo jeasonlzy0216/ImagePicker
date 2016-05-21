@@ -50,6 +50,8 @@ public class ImagePickerActivity extends AppCompatActivity implements SeekBar.On
     private EditText et_crop_radius;
     private EditText et_outputx;
     private EditText et_outputy;
+    
+    private Button btn_wxDemo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,6 +106,9 @@ public class ImagePickerActivity extends AppCompatActivity implements SeekBar.On
         btn_open_gallery.setOnClickListener(this);
 
         gridView = (GridView) findViewById(R.id.gridview);
+
+        btn_wxDemo = (Button) findViewById(R.id.btn_wxDemo);
+        btn_wxDemo.setOnClickListener(this);
     }
 
     @Override
@@ -143,6 +148,9 @@ public class ImagePickerActivity extends AppCompatActivity implements SeekBar.On
 
                 Intent intent = new Intent(this, ImageGridActivity.class);
                 startActivityForResult(intent, 100);
+                break;
+            case R.id.btn_wxDemo:
+                startActivity(new Intent(this,WxDemoActivity.class));
                 break;
         }
     }
