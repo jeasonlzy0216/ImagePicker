@@ -17,7 +17,7 @@
 ## 演示
  ![image](http://7xss53.com2.z0.glb.clouddn.com/imagepicker/demo1.png)![image](http://7xss53.com2.z0.glb.clouddn.com/imagepicker/demo2.gif)
  ![image](http://7xss53.com2.z0.glb.clouddn.com/imagepicker/demo3.gif)
- ![image](https://github.com/ikkong/ImagePicker/gif/wxdemo.gif)
+ ![image](https://github.com/ikkong/ImagePicker/blob/master/gif/wxdemo.gif)
 
 ## 1.用法
 
