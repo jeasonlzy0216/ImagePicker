@@ -16,6 +16,7 @@
         <activity android:name=".ui.ImageBaseActivity"/>
         <activity
             android:name=".ui.ImageGridActivity"
+            android:configChanges="orientation|screenSize"
             android:theme="@style/ImagePickerTheme"/>
         <activity
             android:name=".ui.ImageCropActivity"
