@@ -81,7 +81,7 @@ public class ImageGridActivity extends ImageBaseActivity implements ImageDataSou
             mBtnPre.setVisibility(View.GONE);
         }
 
-        mImageGridAdapter = new ImageGridAdapter(this, null);
+        mImageGridAdapter = new ImageGridAdapter(this, null,mGridView);
         mImageFolderAdapter = new ImageFolderAdapter(this, null);
 
         onImageSelected(0, null, false);
