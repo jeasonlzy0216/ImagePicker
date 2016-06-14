@@ -123,37 +123,36 @@ public class ImagePickerActivity extends AppCompatActivity implements SeekBar.On
 
     @Override
     public void onClick(View v) {
+        if (rb_uil.isChecked()) imagePicker.setImageLoader(new UILImageLoader());
+        else if (rb_glide.isChecked()) imagePicker.setImageLoader(new GlideImageLoader());
+        else if (rb_picasso.isChecked()) imagePicker.setImageLoader(new PicassoImageLoader());
+        else if (rb_fresco.isChecked()) imagePicker.setImageLoader(new GlideImageLoader());
+        else if (rb_xutils3.isChecked()) imagePicker.setImageLoader(new XUtils3ImageLoader());
+        else if (rb_xutils.isChecked()) imagePicker.setImageLoader(new GlideImageLoader());
+
+        if (rb_single_select.isChecked()) imagePicker.setMultiMode(false);
+        else if (rb_muti_select.isChecked()) imagePicker.setMultiMode(true);
+
+        if (rb_crop_square.isChecked()) {
+            imagePicker.setStyle(CropImageView.Style.RECTANGLE);
+            Integer width = Integer.valueOf(et_crop_width.getText().toString());
+            Integer height = Integer.valueOf(et_crop_height.getText().toString());
+            width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, width, getResources().getDisplayMetrics());
+            height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, height, getResources().getDisplayMetrics());
+            imagePicker.setFocusWidth(width);
+            imagePicker.setFocusHeight(height);
+        } else if (rb_crop_circle.isChecked()) {
+            imagePicker.setStyle(CropImageView.Style.CIRCLE);
+            Integer radius = Integer.valueOf(et_crop_radius.getText().toString());
+            radius = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, radius, getResources().getDisplayMetrics());
+            imagePicker.setFocusWidth(radius * 2);
+            imagePicker.setFocusHeight(radius * 2);
+        }
+
+        imagePicker.setOutPutX(Integer.valueOf(et_outputx.getText().toString()));
+        imagePicker.setOutPutY(Integer.valueOf(et_outputy.getText().toString()));
         switch (v.getId()) {
             case R.id.btn_open_gallery:
-                if (rb_uil.isChecked()) imagePicker.setImageLoader(new UILImageLoader());
-                else if (rb_glide.isChecked()) imagePicker.setImageLoader(new GlideImageLoader());
-                else if (rb_picasso.isChecked()) imagePicker.setImageLoader(new PicassoImageLoader());
-                else if (rb_fresco.isChecked()) imagePicker.setImageLoader(new GlideImageLoader());
-                else if (rb_xutils3.isChecked()) imagePicker.setImageLoader(new XUtils3ImageLoader());
-                else if (rb_xutils.isChecked()) imagePicker.setImageLoader(new GlideImageLoader());
-
-                if (rb_single_select.isChecked()) imagePicker.setMultiMode(false);
-                else if (rb_muti_select.isChecked()) imagePicker.setMultiMode(true);
-
-                if (rb_crop_square.isChecked()) {
-                    imagePicker.setStyle(CropImageView.Style.RECTANGLE);
-                    Integer width = Integer.valueOf(et_crop_width.getText().toString());
-                    Integer height = Integer.valueOf(et_crop_height.getText().toString());
-                    width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, width, getResources().getDisplayMetrics());
-                    height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, height, getResources().getDisplayMetrics());
-                    imagePicker.setFocusWidth(width);
-                    imagePicker.setFocusHeight(height);
-                } else if (rb_crop_circle.isChecked()) {
-                    imagePicker.setStyle(CropImageView.Style.CIRCLE);
-                    Integer radius = Integer.valueOf(et_crop_radius.getText().toString());
-                    radius = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, radius, getResources().getDisplayMetrics());
-                    imagePicker.setFocusWidth(radius * 2);
-                    imagePicker.setFocusHeight(radius * 2);
-                }
-
-                imagePicker.setOutPutX(Integer.valueOf(et_outputx.getText().toString()));
-                imagePicker.setOutPutY(Integer.valueOf(et_outputy.getText().toString()));
-
                 Intent intent = new Intent(this, ImageGridActivity.class);
                 startActivityForResult(intent, 100);
                 break;
@@ -246,7 +245,7 @@ public class ImagePickerActivity extends AppCompatActivity implements SeekBar.On
             } else {
                 imageView = (ImageView) convertView;
             }
-            imagePicker.getImageLoader().displayImage(ImagePickerActivity.this, getItem(position).path, imageView, size, size);
+            imagePicker.getImageLoader().displayImage(ImagePickerActivity.this, getItem(position).path, imageView, size, size,1);
             return imageView;
         }
     }

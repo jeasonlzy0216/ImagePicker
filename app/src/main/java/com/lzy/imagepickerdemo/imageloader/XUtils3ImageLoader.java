@@ -16,7 +16,7 @@ import com.lzy.imagepicker.loader.ImageLoader;
 
 public class XUtils3ImageLoader implements ImageLoader {
     @Override
-    public void displayImage(Activity activity, String path, ImageView imageView, int width, int height) {
+    public void displayImage(Activity activity, String path, ImageView imageView, int width, int height,int level) {
 //        ImageOptions options = new ImageOptions.Builder()
 //                .setLoadingDrawableId(R.mipmap.default_image)
 //                .setFailureDrawableId(R.mipmap.default_image)

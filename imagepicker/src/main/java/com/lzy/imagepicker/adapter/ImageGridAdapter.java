@@ -6,8 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.BaseAdapter;
+import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.R;
@@ -26,7 +26,8 @@ import java.util.ArrayList;
  * 修订历史：
  * ================================================
  */
-public class ImageGridAdapter extends BaseAdapter {
+public class ImageGridAdapter extends BaseAdapter 
+        implements AbsListView.OnScrollListener{
 
     private static final int ITEM_TYPE_CAMERA = 0;  //第一个条目是相机
     private static final int ITEM_TYPE_NORMAL = 1;  //第一个条目不是相机
@@ -38,8 +39,11 @@ public class ImageGridAdapter extends BaseAdapter {
     private boolean isShowCamera;         //是否显示拍照按钮
     private int mImageSize;               //每个条目的大小
     private OnImageItemClickListener listener;   //图片被点击的监听
+    private AbsListView.OnScrollListener onScrollListener;
+    
+    private boolean isScrolling = false;
 
-    public ImageGridAdapter(Activity activity, ArrayList<ImageItem> images) {
+    public ImageGridAdapter(Activity activity, ArrayList<ImageItem> images, GridView gridView) {
         this.mActivity = activity;
         if (images == null || images.size() == 0) this.images = new ArrayList<>();
         else this.images = images;
@@ -48,6 +52,7 @@ public class ImageGridAdapter extends BaseAdapter {
         imagePicker = ImagePicker.getInstance();
         isShowCamera = imagePicker.isShowCamera();
         mSelectedImages = imagePicker.getSelectedImages();
+        gridView.setOnScrollListener(this);
     }
 
     public void refreshData(ArrayList<ImageItem> images) {
@@ -146,10 +151,37 @@ public class ImageGridAdapter extends BaseAdapter {
             } else {
                 holder.cbCheck.setVisibility(View.GONE);
             }
-            imagePicker.getImageLoader().displayImage(mActivity, imageItem.path, holder.ivThumb, mImageSize, mImageSize); //显示图片
+            if(isScrolling){
+                imagePicker.getImageLoader().displayImage(mActivity, imageItem.path, holder.ivThumb, mImageSize, mImageSize,0); //显示图片
+            }else{
+                imagePicker.getImageLoader().displayImage(mActivity, imageItem.path, holder.ivThumb, mImageSize, mImageSize,1); //显示图片
+            }
         }
         return convertView;
     }
+
+    @Override
+    public void onScrollStateChanged(AbsListView view, int scrollState) {
+        // 设置是否滚动的状态
+        if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE) {
+            isScrolling = false;
+            this.notifyDataSetChanged();
+        } else {
+            isScrolling = true;
+        }
+        if (onScrollListener != null) {
+            onScrollListener.onScrollStateChanged(view, scrollState);
+        }
+    }
+
+    @Override
+    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+        if (onScrollListener != null) {
+            onScrollListener.onScroll(view, firstVisibleItem, visibleItemCount,
+                    totalItemCount);
+        }
+    }
+
 
     private class ViewHolder {
         public View rootView;

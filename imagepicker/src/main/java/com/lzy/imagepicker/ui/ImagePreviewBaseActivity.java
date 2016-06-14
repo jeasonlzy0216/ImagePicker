@@ -23,7 +23,7 @@ import java.util.ArrayList;
  * 修订历史：图片预览的基类
  * ================================================
  */
-public abstract class ImagePreviewBaseActivity extends ImageBaseActivity {
+public abstract class ImagePreviewBaseActivity extends ImageBaseActivity implements View.OnClickListener{
 
     protected ImagePicker imagePicker;
     protected ArrayList<ImageItem> mImageItems;      //跳转进ImagePreviewFragment的图片文件夹
@@ -62,6 +62,7 @@ public abstract class ImagePreviewBaseActivity extends ImageBaseActivity {
         });
 
         mTitleCount = (TextView) findViewById(R.id.tv_des);
+        topBar.findViewById(R.id.btn_back).setOnClickListener(this);
 
         mViewPager = (ViewPagerFixed) findViewById(R.id.viewpager);
         mAdapter = new ImagePageAdapter(this, mImageItems);

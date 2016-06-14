@@ -22,7 +22,7 @@ import com.lzy.imagepicker.R;
  * 修订历史：预览已经选择的图片，并可以删除, 感谢 ikkong 的提交
  * ================================================
  */
-public class ImagePreviewDelActivity extends ImagePreviewBaseActivity implements View.OnClickListener {
+public class ImagePreviewDelActivity extends ImagePreviewBaseActivity  {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

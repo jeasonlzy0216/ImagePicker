@@ -16,7 +16,7 @@ import java.io.Serializable;
  */
 public interface ImageLoader extends Serializable {
 
-    void displayImage(Activity activity, String path, ImageView imageView, int width, int height);
+    void displayImage(Activity activity, String path, ImageView imageView, int width, int height,int level);
 
     void clearMemoryCache();
 }
