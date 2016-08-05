@@ -4,9 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
 
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.bean.ImageItem;
@@ -82,7 +80,6 @@ public class WxDemoActivity extends AppCompatActivity implements ImagePickerAdap
             if (data != null && requestCode == REQUEST_CODE_SELECT) {
                 ArrayList<ImageItem> images = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker.EXTRA_RESULT_ITEMS);
                 selImageList.addAll(images);
-//                calcRecyclerViewHeight(selImageList.size());
                 adapter.setImages(selImageList);
             }
         } else if (resultCode == ImagePicker.RESULT_CODE_BACK) {
@@ -91,21 +88,8 @@ public class WxDemoActivity extends AppCompatActivity implements ImagePickerAdap
                 ArrayList<ImageItem> images = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker.EXTRA_IMAGE_ITEMS);
                 selImageList.clear();
                 selImageList.addAll(images);
-//                calcRecyclerViewHeight(selImageList.size());
                 adapter.setImages(selImageList);
             }
         }
-    }
-    
-    private void calcRecyclerViewHeight(int nowCount){
-        //如果图片数量>一行显示的数量，重新计算设置高度
-        //此处假设一行最多显示4张图片
-        int line = nowCount == maxImgCount?(maxImgCount+3)/4:(nowCount+1+3)/4;
-        Log.d("","====================line:"+line);
-        ((TextView)findViewById(R.id.line)).setText("line:"+line);
-        recyclerView.setMinimumHeight(line*80);
-        RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
-        layoutManager.setMeasuredDimension(layoutManager.getWidth(),line*80);
-        recyclerView.setLayoutManager(layoutManager);
     }
 }
