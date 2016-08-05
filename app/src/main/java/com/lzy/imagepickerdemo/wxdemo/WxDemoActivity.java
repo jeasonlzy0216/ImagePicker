@@ -3,9 +3,10 @@ package com.lzy.imagepickerdemo.wxdemo;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.bean.ImageItem;
@@ -33,6 +34,7 @@ public class WxDemoActivity extends AppCompatActivity implements ImagePickerAdap
     private ImagePickerAdapter adapter;
     private ArrayList<ImageItem> selImageList; //当前选择的所有图片
     private int maxImgCount = 8;               //允许选择图片最大数
+    private RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,12 +45,12 @@ public class WxDemoActivity extends AppCompatActivity implements ImagePickerAdap
     }
 
     private void initWidget() {
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         selImageList = new ArrayList<>();
         adapter = new ImagePickerAdapter(this, selImageList, maxImgCount);
         adapter.setOnItemClickListener(this);
 
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 4));
+        recyclerView.setLayoutManager(new WrapHeightGridLayoutManager(this, 4));
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);
     }
@@ -80,6 +82,7 @@ public class WxDemoActivity extends AppCompatActivity implements ImagePickerAdap
             if (data != null && requestCode == REQUEST_CODE_SELECT) {
                 ArrayList<ImageItem> images = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker.EXTRA_RESULT_ITEMS);
                 selImageList.addAll(images);
+//                calcRecyclerViewHeight(selImageList.size());
                 adapter.setImages(selImageList);
             }
         } else if (resultCode == ImagePicker.RESULT_CODE_BACK) {
@@ -88,8 +91,21 @@ public class WxDemoActivity extends AppCompatActivity implements ImagePickerAdap
                 ArrayList<ImageItem> images = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker.EXTRA_IMAGE_ITEMS);
                 selImageList.clear();
                 selImageList.addAll(images);
+//                calcRecyclerViewHeight(selImageList.size());
                 adapter.setImages(selImageList);
             }
         }
+    }
+    
+    private void calcRecyclerViewHeight(int nowCount){
+        //如果图片数量>一行显示的数量，重新计算设置高度
+        //此处假设一行最多显示4张图片
+        int line = nowCount == maxImgCount?(maxImgCount+3)/4:(nowCount+1+3)/4;
+        Log.d("","====================line:"+line);
+        ((TextView)findViewById(R.id.line)).setText("line:"+line);
+        recyclerView.setMinimumHeight(line*80);
+        RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
+        layoutManager.setMeasuredDimension(layoutManager.getWidth(),line*80);
+        recyclerView.setLayoutManager(layoutManager);
     }
 }
