@@ -449,7 +449,7 @@ public class CropImageView extends ImageView {
      * @param degrees 选择的角度（单位 度）
      * @return 旋转后的Bitmap
      */
-    private Bitmap rotate(Bitmap bitmap, int degrees) {
+    public Bitmap rotate(Bitmap bitmap, int degrees) {
         if (degrees != 0 && bitmap != null) {
             Matrix matrix = new Matrix();
             matrix.setRotate(degrees, (float) bitmap.getWidth() / 2, (float) bitmap.getHeight() / 2);
