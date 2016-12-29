@@ -35,6 +35,20 @@ public class ImagePreviewActivity extends ImagePreviewBaseActivity implements Im
     private Button mBtnOk;                         //确认图片的选择
     private View bottomBar;
 
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        overridePendingTransition(R.anim.zoomin, R.anim.activity_bg_transparent);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        overridePendingTransition(R.anim.activity_bg_transparent, R.anim.zoomout);
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
