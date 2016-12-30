@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="48dp"
-    android:background="#cc22292c"
+    android:background="@color/theme_body"
     android:clickable="true">
 
     <ImageView
@@ -31,7 +31,7 @@
         android:layout_marginLeft="8dp"
         android:layout_toRightOf="@id/btn_back"
         android:text="选择图片"
-        android:textColor="#ffffff"
+        android:textColor="@color/white"
         android:textSize="16dp"/>
 
     <Button
@@ -47,7 +47,7 @@
         android:minWidth="50dp"
         android:padding="8dp"
         android:text="完成(3/9)"
-        android:textColor="#ffffff"
+        android:textColor="@color/white"
         android:textSize="14dp"/>
 
     <ImageView

@@ -29,5 +29,5 @@
         android:id="@+id/margin"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="#0000"/>
+        android:background="@color/transparent"/>
 </LinearLayout>
