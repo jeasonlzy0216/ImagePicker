@@ -45,6 +45,7 @@ public abstract class ImagePreviewBaseActivity extends ImageBaseActivity {
         mCurrentPosition = getIntent().getIntExtra(ImagePicker.EXTRA_SELECTED_IMAGE_POSITION, 0);
         mImageItems =  (ArrayList<ImageItem>) DataHolder.getInstance().retrieve(DataHolder.DH_CURRENT_IMAGE_FOLDER_ITEMS);
         imagePicker = ImagePicker.getInstance();
+        mImageItems = imagePicker.getCurrentImageFolderItems();
         selectedImages = imagePicker.getSelectedImages();
 
         //初始化控件
