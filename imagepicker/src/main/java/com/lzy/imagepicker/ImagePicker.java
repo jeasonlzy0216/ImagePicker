@@ -1,10 +1,12 @@
 package com.lzy.imagepicker;
 
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
 
@@ -249,7 +251,17 @@ public class ImagePicker {
                 // 照相机有自己默认的存储路径，拍摄的照片将返回一个缩略图。如果想访问原始图片，
                 // 可以通过dat extra能够得到原始图片位置。即，如果指定了目标uri，data就没有数据，
                 // 如果没有指定uri，则data就返回有数据！
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(takeImageFile));
+
+                //兼容Android7.0调用照相机
+                int currentApiVersion = android.os.Build.VERSION.SDK_INT;
+                if(currentApiVersion < Build.VERSION_CODES.N){
+                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(takeImageFile));
+                }else{
+                    ContentValues contentValues = new ContentValues(1);
+                    contentValues.put(MediaStore.Images.Media.DATA, takeImageFile.getAbsolutePath());
+                    Uri uri = activity.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,contentValues);
+                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+                }
             }
         }
         activity.startActivityForResult(takePictureIntent, requestCode);
