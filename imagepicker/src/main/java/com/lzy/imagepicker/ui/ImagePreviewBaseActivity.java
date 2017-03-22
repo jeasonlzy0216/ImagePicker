@@ -42,6 +42,7 @@ public abstract class ImagePreviewBaseActivity extends ImageBaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_preview);
+        getWindow().setBackgroundDrawableResource(R.color.transparent);
 
         mCurrentPosition = getIntent().getIntExtra(ImagePicker.EXTRA_SELECTED_IMAGE_POSITION, 0);
         isFromItems = getIntent().getBooleanExtra(ImagePicker.EXTRA_FROM_ITEMS,false);

@@ -2,14 +2,13 @@
     android:id="@+id/content"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#000">
+    android:layout_height="match_parent">
 
     <com.lzy.imagepicker.view.ViewPagerFixed
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#000"/>
+        android:background="@color/black"/>
 
     <include
         android:id="@+id/top_bar"
@@ -20,7 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_alignParentBottom="true"
-        android:background="#cc22292c"
+        android:background="@color/theme_body"
         android:visibility="gone">
 
         <com.lzy.imagepicker.view.SuperCheckBox
@@ -31,7 +30,7 @@
             android:layout_marginLeft="10dp"
             android:paddingLeft="8dp"
             android:text="原图(3.07M)"
-            android:textColor="#FFF"/>
+            android:textColor="@color/white"/>
 
         <com.lzy.imagepicker.view.SuperCheckBox
             android:id="@+id/cb_check"
@@ -45,6 +44,6 @@
             android:includeFontPadding="true"
             android:paddingLeft="8dp"
             android:text="选择"
-            android:textColor="#ffffff"/>
+            android:textColor="@color/white"/>
     </RelativeLayout>
 </RelativeLayout>

@@ -3,7 +3,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000"
     android:orientation="vertical">
 
     <include
@@ -51,7 +50,7 @@
                 android:singleLine="true"
                 android:text="全部图片"
                 android:textAllCaps="false"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/white"
                 android:textSize="16sp"/>
 
             <Button
@@ -64,7 +63,7 @@
                 android:paddingRight="16dp"
                 android:text="预览(3)"
                 android:textAllCaps="false"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/white"
                 android:textSize="16sp"/>
 
             <View

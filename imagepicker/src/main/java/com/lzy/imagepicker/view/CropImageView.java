@@ -29,6 +29,7 @@ import com.lzy.imagepicker.R;
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.lang.ref.WeakReference;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -98,7 +99,7 @@ public class CropImageView extends ImageView {
     private float mMaxScale = MAX_SCALE;//程序根据不同图片的大小，动态得到的最大缩放比
     private boolean isInited = false;   //是否经过了 onSizeChanged 初始化
     private boolean mSaving = false;    //是否正在保存
-    private static Handler mHandler = new InnerHandler();
+    private Handler mHandler = new InnerHandler(this);
 
     public CropImageView(Context context) {
         this(context, null);
@@ -584,26 +585,37 @@ public class CropImageView extends ImageView {
     }
 
     private static class InnerHandler extends Handler {
-        public InnerHandler() {
+
+        private WeakReference<CropImageView> cropImageView;
+
+        InnerHandler(CropImageView view) {
             super(Looper.getMainLooper());
+            cropImageView = new WeakReference<CropImageView>(view);
         }
 
         @Override
         public void handleMessage(Message msg) {
-            File saveFile = (File) msg.obj;
-            switch (msg.what) {
-                case SAVE_SUCCESS:
-                    if (mListener != null) mListener.onBitmapSaveSuccess(saveFile);
-                    break;
-                case SAVE_ERROR:
-                    if (mListener != null) mListener.onBitmapSaveError(saveFile);
-                    break;
+            CropImageView view = cropImageView.get();
+            if (view != null){
+                view.handleMessage(msg);
             }
         }
     }
 
+    private void handleMessage(Message msg) {
+        File saveFile = (File) msg.obj;
+        switch (msg.what) {
+            case SAVE_SUCCESS:
+                if (mListener != null) mListener.onBitmapSaveSuccess(saveFile);
+                break;
+            case SAVE_ERROR:
+                if (mListener != null) mListener.onBitmapSaveError(saveFile);
+                break;
+        }
+    }
+
     /** 图片保存完成的监听 */
-    private static OnBitmapSaveCompleteListener mListener;
+    private OnBitmapSaveCompleteListener mListener;
 
     public interface OnBitmapSaveCompleteListener {
         void onBitmapSaveSuccess(File file);
