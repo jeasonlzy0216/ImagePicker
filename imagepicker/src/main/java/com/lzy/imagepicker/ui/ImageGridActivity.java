@@ -263,7 +263,7 @@ public class ImageGridActivity extends ImageBaseActivity implements ImageDataSou
             mBtnPre.setEnabled(false);
         }
         mBtnPre.setText(getResources().getString(R.string.preview_count, imagePicker.getSelectImageCount()));
-        mImageGridAdapter.notifyDataSetChanged();
+        
     }
 
     @Override
