@@ -35,11 +35,12 @@ import java.util.Locale;
  * 创建日期：2016/5/19
  * 描    述：图片选择的入口类
  * 修订历史：
- *
+ * <p>
  * 2017-03-20
+ *
  * @author nanchen
- * 采用单例和弱引用解决Intent传值限制导致的异常
- * ================================================
+ *         采用单例和弱引用解决Intent传值限制导致的异常
+ *         ================================================
  */
 public class ImagePicker {
 
@@ -66,6 +67,7 @@ public class ImagePicker {
     private int focusHeight = 280;        //焦点框的高度
     private ImageLoader imageLoader;     //图片加载器
     private CropImageView.Style style = CropImageView.Style.RECTANGLE; //裁剪框的形状
+    private boolean clear = true;       //是否重选
     private File cropCacheFolder;
     private File takeImageFile;
     public Bitmap cropBitmap;
@@ -229,26 +231,34 @@ public class ImagePicker {
         return mSelectedImages;
     }
 
+    public void setClear(boolean clear) {
+        this.clear = clear;
+    }
+
     public void clearSelectedImages() {
         if (mSelectedImages != null) mSelectedImages.clear();
     }
 
     public void clear() {
-        if (mImageSelectedListeners != null) {
-            mImageSelectedListeners.clear();
-            mImageSelectedListeners = null;
+        if (clear) {
+            if (mImageSelectedListeners != null) {
+                mImageSelectedListeners.clear();
+                mImageSelectedListeners = null;
+            }
+            if (mImageFolders != null) {
+                mImageFolders.clear();
+                mImageFolders = null;
+            }
+            if (mSelectedImages != null) {
+                mSelectedImages.clear();
+            }
+            mCurrentImageFolderPosition = 0;
         }
-        if (mImageFolders != null) {
-            mImageFolders.clear();
-            mImageFolders = null;
-        }
-        if (mSelectedImages != null) {
-            mSelectedImages.clear();
-        }
-        mCurrentImageFolderPosition = 0;
     }
 
-    /** 拍照的方法 */
+    /**
+     * 拍照的方法
+     */
     public void takePicture(Activity activity, int requestCode) {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         takePictureIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -264,10 +274,9 @@ public class ImagePicker {
                 // 如果没有指定uri，则data就返回有数据！
 
                 Uri uri;
-                if (VERSION.SDK_INT <= VERSION_CODES.M){
+                if (VERSION.SDK_INT <= VERSION_CODES.M) {
                     uri = Uri.fromFile(takeImageFile);
-                }else{
-
+                } else {
 
 
                     /**
@@ -285,14 +294,16 @@ public class ImagePicker {
                     }
                 }
 
-                Log.e("nanchen",ProviderUtil.getFileProviderName(activity));
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT,uri);
+                Log.e("nanchen", ProviderUtil.getFileProviderName(activity));
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
             }
         }
         activity.startActivityForResult(takePictureIntent, requestCode);
     }
 
-    /** 根据系统时间、前缀、后缀产生一个文件 */
+    /**
+     * 根据系统时间、前缀、后缀产生一个文件
+     */
     public static File createFile(File folder, String prefix, String suffix) {
         if (!folder.exists() || !folder.isDirectory()) folder.mkdirs();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.CHINA);
@@ -300,7 +311,9 @@ public class ImagePicker {
         return new File(folder, filename);
     }
 
-    /** 扫描图片 */
+    /**
+     * 扫描图片
+     */
     public static void galleryAddPic(Context context, File file) {
         Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
         Uri contentUri = Uri.fromFile(file);
@@ -308,7 +321,9 @@ public class ImagePicker {
         context.sendBroadcast(mediaScanIntent);
     }
 
-    /** 图片选中的监听 */
+    /**
+     * 图片选中的监听
+     */
     public interface OnImageSelectedListener {
         void onImageSelected(int position, ImageItem item, boolean isAdd);
     }
