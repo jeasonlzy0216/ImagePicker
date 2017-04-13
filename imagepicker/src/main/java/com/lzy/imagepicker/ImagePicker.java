@@ -67,6 +67,7 @@ public class ImagePicker {
     private int focusHeight = 280;        //焦点框的高度
     private ImageLoader imageLoader;     //图片加载器
     private CropImageView.Style style = CropImageView.Style.RECTANGLE; //裁剪框的形状
+    private boolean clear = true;       //是否重选
     private File cropCacheFolder;
     private File takeImageFile;
     public Bitmap cropBitmap;
@@ -230,8 +231,8 @@ public class ImagePicker {
         return mSelectedImages;
     }
 
-    public void setSelectedImages(ArrayList<ImageItem> mSelectedImages) {
-        this.mSelectedImages = mSelectedImages;
+    public void setClear(boolean clear) {
+        this.clear = clear;
     }
 
     public void clearSelectedImages() {
@@ -239,18 +240,20 @@ public class ImagePicker {
     }
 
     public void clear() {
-        if (mImageSelectedListeners != null) {
-            mImageSelectedListeners.clear();
-            mImageSelectedListeners = null;
+        if (clear) {
+            if (mImageSelectedListeners != null) {
+                mImageSelectedListeners.clear();
+                mImageSelectedListeners = null;
+            }
+            if (mImageFolders != null) {
+                mImageFolders.clear();
+                mImageFolders = null;
+            }
+            if (mSelectedImages != null) {
+                mSelectedImages.clear();
+            }
+            mCurrentImageFolderPosition = 0;
         }
-        if (mImageFolders != null) {
-            mImageFolders.clear();
-            mImageFolders = null;
-        }
-        if (mSelectedImages != null) {
-            mSelectedImages.clear();
-        }
-        mCurrentImageFolderPosition = 0;
     }
 
     /**
