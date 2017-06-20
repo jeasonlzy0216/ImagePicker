@@ -31,4 +31,16 @@ public class ImageItem implements Serializable {
 
         return super.equals(o);
     }
+
+    public ImageItem() {}
+
+    public ImageItem(ImageItem imageItem) {
+        this.name = imageItem.name;
+        this.path = imageItem.path;
+        this.size = imageItem.size;
+        this.width = imageItem.width;
+        this.height = imageItem.height;
+        this.mimeType = imageItem.mimeType;
+        this.addTime = imageItem.addTime;
+    }
 }

@@ -162,7 +162,7 @@ public class ImageRecyclerAdapter extends RecyclerView.Adapter<ViewHolder> {
             //根据是否多选，显示或隐藏checkbox
             if (imagePicker.isMultiMode()) {
                 cbCheck.setVisibility(View.VISIBLE);
-                boolean checked = mSelectedImages.contains(imageItem);
+                boolean checked = isSelected(imageItem);
                 if (checked) {
                     mask.setVisibility(View.VISIBLE);
                     cbCheck.setChecked(true);
@@ -175,7 +175,22 @@ public class ImageRecyclerAdapter extends RecyclerView.Adapter<ViewHolder> {
             }
             imagePicker.getImageLoader().displayImage(mActivity, imageItem.path, ivThumb, mImageSize, mImageSize); //显示图片
         }
+    }
 
+    private Boolean isSelected(ImageItem imageItem) {
+        for (int i=0, length=mSelectedImages.size(); i<length; i++) {
+            ImageItem item = mSelectedImages.get(i);
+            // 如果是手机拍照生成的图片，这里选择的时候，path是相等的，当时imageItem对象不同，
+            // 此时需要做一下处理，免得后续操作出问题。
+            if (item.path.equals(imageItem.path)) {
+                if (item != imageItem) {
+                    mSelectedImages.set(i, imageItem);
+                }
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private class CameraViewHolder extends ViewHolder{
