@@ -7,18 +7,16 @@
     android:orientation="vertical">
 
     <FrameLayout
-        android:id="@+id/masker"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="#A000"
         android:layout_weight="1">
 
-     <!--   <View
+        <View
             android:id="@+id/masker"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#A000"/>
--->
+
         <ListView
             android:id="@+id/listView"
             android:layout_width="match_parent"
