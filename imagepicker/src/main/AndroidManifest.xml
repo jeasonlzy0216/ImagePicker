@@ -27,6 +27,10 @@
             android:name=".ui.ImagePreviewActivity"
             android:configChanges="orientation|screenSize"
             android:theme="@style/ImagePickerThemeFullScreen"/>
+        <activity
+            android:name=".ui.ImagePreviewOnlyActivity"
+            android:configChanges="orientation|screenSize"
+            android:theme="@style/ImagePickerThemeFullScreen" />
     </application>
 
 </manifest>

@@ -2,15 +2,9 @@ package com.lzy.imagepicker;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
+import android.content.res.Resources;
 import android.os.Environment;
 import android.util.DisplayMetrics;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.util.Random;
 
 /**
  * ================================================
@@ -23,7 +17,12 @@ import java.util.Random;
  */
 public class Utils {
 
-    /** 获得状态栏的高度 */
+    private static int mNavigationBarHeight = -1;
+
+
+    /**
+     * 获得状态栏的高度
+     */
     public static int getStatusHeight(Context context) {
         int statusHeight = -1;
         try {
@@ -37,7 +36,9 @@ public class Utils {
         return statusHeight;
     }
 
-    /** 根据屏幕宽度与密度计算GridView显示的列数， 最少为三列，并获取Item宽度 */
+    /**
+     * 根据屏幕宽度与密度计算GridView显示的列数， 最少为三列，并获取Item宽度
+     */
     public static int getImageItemWidth(Activity activity) {
         int screenWidth = activity.getResources().getDisplayMetrics().widthPixels;
         int densityDpi = activity.getResources().getDisplayMetrics().densityDpi;
@@ -62,4 +63,22 @@ public class Utils {
         activity.getWindowManager().getDefaultDisplay().getMetrics(displaysMetrics);
         return displaysMetrics;
     }
+
+    /**
+     * 获取手机屏幕底部导航栏高度
+     *
+     * @return
+     */
+    public static int getNavigationBarHeight(Context context) {
+
+        if (mNavigationBarHeight == -1) {
+            Resources resources = context.getResources();
+
+            int resourceId = resources.getIdentifier("navigation_bar_height", "dimen", "android");
+
+            mNavigationBarHeight = resources.getDimensionPixelSize(resourceId);
+        }
+        return mNavigationBarHeight;
+    }
+
 }

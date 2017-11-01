@@ -28,6 +28,11 @@ public class UILImageLoader implements ImageLoader {
     }
 
     @Override
+    public void displayImage(Activity activity, String path, ImageView imageView, int holderRes, int width, int height) {
+
+    }
+
+    @Override
     public void clearMemoryCache() {
     }
 }

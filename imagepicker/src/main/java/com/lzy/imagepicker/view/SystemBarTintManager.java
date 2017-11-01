@@ -41,6 +41,7 @@ import java.lang.reflect.Method;
  * Class to manage status and navigation bar tint effects when using KitKat
  * translucent system UI modes.
  */
+@SuppressWarnings("ResourceType")
 public class SystemBarTintManager {
 
     static {
@@ -63,6 +64,7 @@ public class SystemBarTintManager {
      * The default system bar tint color value.
      */
     public static final int DEFAULT_TINT_COLOR = 0x99000000;
+//    public static final int COUNT_ONE = 1;
 
     private static String sNavBarOverride;
 

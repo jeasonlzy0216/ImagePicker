@@ -24,16 +24,21 @@ import com.lzy.imagepicker.R;
  * 修订历史：预览已经选择的图片，并可以删除, 感谢 ikkong 的提交
  * ================================================
  */
-public class ImagePreviewDelActivity extends ImagePreviewBaseActivity implements View.OnClickListener {
+public class ImagePreviewOnlyActivity extends ImagePreviewBaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        ImageView mBtnDel = (ImageView) findViewById(R.id.btn_del);
-        mBtnDel.setOnClickListener(this);
-        mBtnDel.setVisibility(View.VISIBLE);
-        topBar.findViewById(R.id.btn_back).setOnClickListener(this);
+//        ImageView mBtnDel = (ImageView) findViewById(R.id.btn_del);
+//        mBtnDel.setOnClickListener(this);
+//        mBtnDel.setVisibility(View.VISIBLE);
+        topBar.findViewById(R.id.btn_back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
 
         mTitleCount.setText(getString(R.string.preview_image_count, mCurrentPosition + 1, mImageItems.size()));
         //滑动ViewPager的时候，根据外界的数据改变当前的选中状态和当前的图片的位置描述文本
@@ -46,15 +51,15 @@ public class ImagePreviewDelActivity extends ImagePreviewBaseActivity implements
         });
     }
 
-    @Override
-    public void onClick(View v) {
-        int id = v.getId();
-        if (id == R.id.btn_del) {
-            showDeleteDialog();
-        } else if (id == R.id.btn_back) {
-            onBackPressed();
-        }
-    }
+//    @Override
+//    public void onClick(View v) {
+//        int id = v.getId();
+//        if (id == R.id.btn_del) {
+//            showDeleteDialog();
+//        } else if (id == R.id.btn_back) {
+//            onBackPressed();
+//        }
+//    }
 
     /**
      * 是否删除此张图片
@@ -83,10 +88,10 @@ public class ImagePreviewDelActivity extends ImagePreviewBaseActivity implements
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent();
-        //带回最新数据
-        intent.putExtra(ImagePicker.EXTRA_IMAGE_ITEMS, mImageItems);
-        setResult(ImagePicker.RESULT_CODE_BACK, intent);
+//        Intent intent = new Intent();
+//        //带回最新数据
+//        intent.putExtra(ImagePicker.EXTRA_IMAGE_ITEMS, mImageItems);
+//        setResult(ImagePicker.RESULT_CODE_BACK, intent);
         finish();
         super.onBackPressed();
     }

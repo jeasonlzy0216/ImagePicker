@@ -40,6 +40,7 @@ public class ImagePageAdapter extends PagerAdapter {
         DisplayMetrics dm = Utils.getScreenPix(activity);
         screenWidth = dm.widthPixels;
         screenHeight = dm.heightPixels;
+//        screenHeight = dm.heightPixels - Utils.getNavigationBarHeight(activity);
         imagePicker = ImagePicker.getInstance();
     }
 
@@ -63,6 +64,8 @@ public class ImagePageAdapter extends PagerAdapter {
             }
         });
         container.addView(photoView);
+//        container.addView(photoView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+
         return photoView;
     }
 

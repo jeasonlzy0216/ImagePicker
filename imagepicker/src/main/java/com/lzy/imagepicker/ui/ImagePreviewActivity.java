@@ -1,12 +1,14 @@
 package com.lzy.imagepicker.ui;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.text.format.Formatter;
 import android.view.View;
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Toast;
@@ -160,25 +162,104 @@ public class ImagePreviewActivity extends ImagePreviewBaseActivity implements Im
         super.onDestroy();
     }
 
-    /** 单击时，隐藏头和尾 */
+    /**
+     * 单击时，隐藏头和尾
+     */
     @Override
     public void onImageSingleTap() {
         if (topBar.getVisibility() == View.VISIBLE) {
-            topBar.setAnimation(AnimationUtils.loadAnimation(this, R.anim.top_out));
-            bottomBar.setAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_out));
-            topBar.setVisibility(View.GONE);
-            bottomBar.setVisibility(View.GONE);
-            tintManager.setStatusBarTintResource(R.color.transparent);//通知栏所需颜色
-            //给最外层布局加上这个属性表示，Activity全屏显示，且状态栏被隐藏覆盖掉。
-            if (Build.VERSION.SDK_INT >= 16) content.setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
+
+//            topBar.setAnimation(AnimationUtils.loadAnimation(this, R.anim.top_out));
+//            bottomBar.setAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_out));
+//            topBar.setVisibility(View.GONE);
+//            bottomBar.setVisibility(View.GONE);
+
+
+//            ValueAnimator valueAnimator = ValueAnimator.ofInt(0, 1).setDuration(300);
+//            valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+//                @Override
+//                public void onAnimationUpdate(ValueAnimator valueAnimator) {
+//                    float fraction = valueAnimator.getAnimatedFraction();
+////                                L.d("srollHeight * fraction:" + srollHeight * fraction);
+//
+////                    topBar.scrollTo(0, (int) (-topBar.getHeight() * 1.5 * fraction));
+//                    topBar.setY((float) (-topBar.getHeight() * 1.5 * fraction));
+//                    bottomBar.setY((float) (bottomBar.getHeight() * fraction));
+//
+////                    bottomBar.scrollTo(0, (int) (-bottomBar.getHeight() * fraction));
+//                }
+//            });
+
+
+            Animator animator1 = ObjectAnimator.ofFloat(topBar, "translationY", 0, -topBar.getHeight() * 1.5f).setDuration(300);
+            Animator animator = ObjectAnimator.ofFloat(bottomBar, "translationY", 0, bottomBar.getHeight()).setDuration(300);
+
+            animator1.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    super.onAnimationEnd(animation);
+                    topBar.setVisibility(View.INVISIBLE);
+                    bottomBar.setVisibility(View.INVISIBLE);
+
+                    tintManager.setStatusBarTintResource(R.color.transparent);//通知栏所需颜色
+                    //给最外层布局加上这个属性表示，Activity全屏显示，且状态栏被隐藏覆盖掉。
+                    if (Build.VERSION.SDK_INT >= 16) {
+                        content.setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
+                    }
+                }
+            });
+            animator1.start();
+            animator.start();
+
+
         } else {
-            topBar.setAnimation(AnimationUtils.loadAnimation(this, R.anim.top_in));
-            bottomBar.setAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_in));
-            topBar.setVisibility(View.VISIBLE);
-            bottomBar.setVisibility(View.VISIBLE);
+
             tintManager.setStatusBarTintResource(R.color.status_bar);//通知栏所需颜色
             //Activity全屏显示，但状态栏不会被隐藏覆盖，状态栏依然可见，Activity顶端布局部分会被状态遮住
-            if (Build.VERSION.SDK_INT >= 16) content.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+            if (Build.VERSION.SDK_INT >= 16) {
+                content.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+            }
+
+            topBar.setVisibility(View.VISIBLE);
+            bottomBar.setVisibility(View.VISIBLE);
+
+            Animator animator1 = ObjectAnimator.ofFloat(topBar, "translationY", -topBar.getHeight() * 1.5f, 0).setDuration(300);
+            Animator animator = ObjectAnimator.ofFloat(bottomBar, "translationY", bottomBar.getHeight(), 0).setDuration(300);
+
+//            animator.addListener(new AnimatorListenerAdapter() {
+//                @Override
+//                public void onAnimationEnd(Animator animation) {
+//                    super.onAnimationEnd(animation);
+//                    topBar.setVisibility(View.INVISIBLE);
+//                    bottomBar.setVisibility(View.INVISIBLE);
+//
+//                    tintManager.setStatusBarTintResource(R.color.transparent);//通知栏所需颜色
+//                    //给最外层布局加上这个属性表示，Activity全屏显示，且状态栏被隐藏覆盖掉。
+//                    if (Build.VERSION.SDK_INT >= 16) {
+//                        content.setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
+//                    }
+//                }
+//            });
+            animator1.start();
+            animator.start();
+//            valueAnimator.addListener(new AnimatorListenerAdapter() {
+//                @Override
+//                public void onAnimationEnd(Animator animation) {
+//                    super.onAnimationEnd(animation);
+//                    topBar.setVisibility(View.INVISIBLE);
+//                    bottomBar.setVisibility(View.INVISIBLE);
+//                }
+//            });
+
+
+//            ObjectAnimator.ofFloat(topBar, "translationY", -topBar.getHeight() * 2, 0).start();
+//
+//            ObjectAnimator.ofFloat(bottomBar, "translationY", bottomBar.getHeight(), 0).start();
+
+
+//            topBar.setAnimation(AnimationUtils.loadAnimation(this, R.anim.top_in));
+//            bottomBar.setAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_in));
+
         }
     }
 }

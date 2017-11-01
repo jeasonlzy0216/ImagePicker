@@ -123,7 +123,8 @@ public class ImageGridAdapter extends BaseAdapter {
             holder.ivThumb.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (listener != null) listener.onImageItemClick(holder.rootView, imageItem, position);
+                    if (listener != null)
+                        listener.onImageItemClick(holder.rootView, imageItem, position);
                 }
             });
             holder.cbCheck.setOnClickListener(new View.OnClickListener() {
@@ -154,7 +155,7 @@ public class ImageGridAdapter extends BaseAdapter {
             } else {
                 holder.cbCheck.setVisibility(View.GONE);
             }
-            imagePicker.getImageLoader().displayImage(mActivity, imageItem.path, holder.ivThumb, mImageSize, mImageSize); //显示图片
+            imagePicker.getImageLoader().displayImage(mActivity, imageItem.path, holder.ivThumb, R.drawable.icon_flip_holder, mImageSize, mImageSize); //显示图片
         }
         return convertView;
     }

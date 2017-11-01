@@ -56,7 +56,7 @@ public class FolderPopUpWindow extends PopupWindow implements View.OnClickListen
             @Override
             public void onGlobalLayout() {
                 view.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                int maxHeight = view.getHeight() * 5 / 8;
+                int maxHeight = view.getHeight() * 6 / 8;
                 int realHeight = listView.getHeight();
                 ViewGroup.LayoutParams listParams = listView.getLayoutParams();
                 listParams.height = realHeight > maxHeight ? maxHeight : realHeight;
@@ -70,7 +70,8 @@ public class FolderPopUpWindow extends PopupWindow implements View.OnClickListen
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                if (onItemClickListener != null) onItemClickListener.onItemClick(adapterView, view, position, l);
+                if (onItemClickListener != null)
+                    onItemClickListener.onItemClick(adapterView, view, position, l);
             }
         });
     }
