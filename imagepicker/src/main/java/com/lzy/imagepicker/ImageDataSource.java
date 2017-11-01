@@ -88,6 +88,11 @@ public class ImageDataSource implements LoaderManager.LoaderCallbacks<Cursor> {
                 int imageHeight = data.getInt(data.getColumnIndexOrThrow(IMAGE_PROJECTION[4]));
                 String imageMimeType = data.getString(data.getColumnIndexOrThrow(IMAGE_PROJECTION[5]));
                 long imageAddTime = data.getLong(data.getColumnIndexOrThrow(IMAGE_PROJECTION[6]));
+
+                // add if image is .downloading format, should delete
+                if (!isImageFromName(imageName)) {
+                    continue;
+                }
                 //封装实体
                 ImageItem imageItem = new ImageItem();
                 imageItem.name = imageName;
@@ -137,8 +142,18 @@ public class ImageDataSource implements LoaderManager.LoaderCallbacks<Cursor> {
         System.out.println("--------");
     }
 
-    /** 所有图片加载完成的回调接口 */
+    /**
+     * 所有图片加载完成的回调接口
+     */
     public interface OnImagesLoadedListener {
         void onImagesLoaded(List<ImageFolder> imageFolders);
+    }
+
+    public boolean isImageFromName(String filename) {
+        if (filename.endsWith(".jpg") || filename.endsWith(".png")
+                || filename.endsWith(".jpeg")) {
+            return true;
+        }
+        return false;
     }
 }

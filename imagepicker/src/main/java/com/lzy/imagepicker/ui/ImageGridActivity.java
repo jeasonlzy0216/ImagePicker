@@ -153,7 +153,9 @@ public class ImageGridActivity extends ImageBaseActivity implements ImageDataSou
         }
     }
 
-    /** 创建弹出的ListView */
+    /**
+     * 创建弹出的ListView
+     */
     private void createPopupFolderList() {
         mFolderPopupWindow = new FolderPopUpWindow(this, mImageFolderAdapter);
         mFolderPopupWindow.setOnItemClickListener(new FolderPopUpWindow.OnItemClickListener() {
@@ -212,6 +214,7 @@ public class ImageGridActivity extends ImageBaseActivity implements ImageDataSou
     @Override
     public void onImageSelected(int position, ImageItem item, boolean isAdd) {
         if (imagePicker.getSelectImageCount() > 0) {
+
             mBtnOk.setText(getString(R.string.select_complete, imagePicker.getSelectImageCount(), imagePicker.getSelectLimit()));
             mBtnOk.setEnabled(true);
             mBtnPre.setEnabled(true);
