@@ -34,8 +34,8 @@
             android:theme="@style/ImagePickerThemeFullScreen"/>
 
         <provider
-            android:authorities="${applicationId}.provider"
             android:name=".ImagePickerProvider"
+            android:authorities="${applicationId}.provider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data

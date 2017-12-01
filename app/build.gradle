@@ -31,6 +31,6 @@ dependencies {
 
     compile 'com.lzy.widget:view-core:0.2.1'
 
-    //compile 'com.lzy.widget:imagepicker:0.6.0'
+    //compile 'com.lzy.widget:imagepicker:0.6.1'
     compile project(':imagepicker')
 }

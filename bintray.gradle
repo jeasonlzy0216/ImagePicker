@@ -1,10 +1,10 @@
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 
-version = "0.6.0"              // 数据仓库依赖第三部分
+version = "0.6.1"              // 数据仓库依赖第三部分
 
-def siteUrl = 'https://github.com/jeasonlzy0216/NineGridView'
-def gitUrl = 'https://github.com/jeasonlzy0216/NineGridView.git'
+def siteUrl = 'https://github.com/jeasonlzy/ImagePicker'
+def gitUrl = 'https://github.com/jeasonlzy/ImagePicker.git'
 group = "com.lzy.widget"       // 数据仓库依赖第一部分
 
 install {
