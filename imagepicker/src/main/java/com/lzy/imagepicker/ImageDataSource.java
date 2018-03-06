@@ -40,6 +40,7 @@ public class ImageDataSource implements LoaderManager.LoaderCallbacks<Cursor> {
     private FragmentActivity activity;
     private OnImagesLoadedListener loadedListener;                     //图片加载完成的回调接口
     private ArrayList<ImageFolder> imageFolders = new ArrayList<>();   //所有的图片文件夹
+    private boolean isLoad;
 
     /**
      * @param activity       用于初始化LoaderManager，需要兼容到2.3
@@ -76,6 +77,8 @@ public class ImageDataSource implements LoaderManager.LoaderCallbacks<Cursor> {
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        if (isLoad) return;
+        isLoad = true;
         imageFolders.clear();
         if (data != null) {
             ArrayList<ImageItem> allImages = new ArrayList<>();   //所有图片的集合,不分文件夹
