@@ -2,6 +2,7 @@ package com.lzy.imagepicker.adapter;
 
 import android.Manifest;
 import android.app.Activity;
+import android.net.Uri;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
@@ -56,6 +57,7 @@ public class ImageRecyclerAdapter extends RecyclerView.Adapter<ViewHolder> {
 
     public interface OnImageItemClickListener {
         void onImageItemClick(View view, ImageItem imageItem, int position);
+        void uri(Uri uri);
     }
 
     public void refreshData(ArrayList<ImageItem> images) {
@@ -200,7 +202,8 @@ public class ImageRecyclerAdapter extends RecyclerView.Adapter<ViewHolder> {
                     if (!((ImageBaseActivity) mActivity).checkPermission(Manifest.permission.CAMERA)) {
                         ActivityCompat.requestPermissions(mActivity, new String[]{Manifest.permission.CAMERA}, ImageGridActivity.REQUEST_PERMISSION_CAMERA);
                     } else {
-                        imagePicker.takePicture(mActivity, ImagePicker.REQUEST_CODE_TAKE);
+                        Uri uri = imagePicker.takePicture(mActivity, ImagePicker.REQUEST_CODE_TAKE);
+                        listener.uri(uri);
                     }
                 }
             });

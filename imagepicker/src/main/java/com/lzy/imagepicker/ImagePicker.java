@@ -1,6 +1,7 @@
 package com.lzy.imagepicker;
 
 import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -55,7 +56,8 @@ public class ImagePicker {
     public static final String EXTRA_SELECTED_IMAGE_POSITION = "selected_image_position";
     public static final String EXTRA_IMAGE_ITEMS = "extra_image_items";
     public static final String EXTRA_FROM_ITEMS = "extra_from_items";
-
+    private static ImagePicker mInstance;
+    public Bitmap cropBitmap;
     private boolean multiMode = true;    //图片选择模式
     private int selectLimit = 9;         //最大选择图片数量
     private boolean crop = true;         //裁剪
@@ -69,14 +71,10 @@ public class ImagePicker {
     private CropImageView.Style style = CropImageView.Style.RECTANGLE; //裁剪框的形状
     private File cropCacheFolder;
     private File takeImageFile;
-    public Bitmap cropBitmap;
-
     private ArrayList<ImageItem> mSelectedImages = new ArrayList<>();   //选中的图片集合
     private List<ImageFolder> mImageFolders;      //所有的图片文件夹
     private int mCurrentImageFolderPosition = 0;  //当前选中的文件夹位置 0表示所有图片
     private List<OnImageSelectedListener> mImageSelectedListeners;          // 图片选中的监听回调
-
-    private static ImagePicker mInstance;
 
     private ImagePicker() {
     }
@@ -90,6 +88,16 @@ public class ImagePicker {
             }
         }
         return mInstance;
+    }
+
+    /**
+     * 扫描图片
+     */
+    public static void galleryAddPic(Context context, File file) {
+        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+        Uri contentUri = Uri.fromFile(file);
+        mediaScanIntent.setData(contentUri);
+        context.sendBroadcast(mediaScanIntent);
     }
 
     public boolean isMultiMode() {
@@ -230,6 +238,13 @@ public class ImagePicker {
         return mSelectedImages;
     }
 
+    public void setSelectedImages(ArrayList<ImageItem> selectedImages) {
+        if (selectedImages == null) {
+            return;
+        }
+        this.mSelectedImages = selectedImages;
+    }
+
     public void clearSelectedImages() {
         if (mSelectedImages != null) mSelectedImages.clear();
     }
@@ -252,20 +267,28 @@ public class ImagePicker {
     /**
      * 拍照的方法
      */
-    public void takePicture(Activity activity, int requestCode) {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+    public Uri takePicture(Activity activity, int requestCode) {
+        Uri uri = null;
+        Intent takePictureIntent = new Intent();
+        takePictureIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        takePictureIntent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
         takePictureIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         if (takePictureIntent.resolveActivity(activity.getPackageManager()) != null) {
-            if (Utils.existSDCard()) takeImageFile = new File(Environment.getExternalStorageDirectory(), "/DCIM/camera/");
-            else takeImageFile = Environment.getDataDirectory();
+
+            if (Utils.existSDCard()) {
+                takeImageFile = new File(Environment.getExternalStorageDirectory(), "/DCIM/camera/");
+            } else {
+                takeImageFile = Environment.getDataDirectory();
+            }
+
             takeImageFile = createFile(takeImageFile, "IMG_", ".jpg");
+
             if (takeImageFile != null) {
                 // 默认情况下，即不需要指定intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
                 // 照相机有自己默认的存储路径，拍摄的照片将返回一个缩略图。如果想访问原始图片，
                 // 可以通过dat extra能够得到原始图片位置。即，如果指定了目标uri，data就没有数据，
                 // 如果没有指定uri，则data就返回有数据！
 
-                Uri uri;
                 if (VERSION.SDK_INT <= VERSION_CODES.M) {
                     uri = Uri.fromFile(takeImageFile);
                 } else {
@@ -275,6 +298,7 @@ public class ImagePicker {
                      * 并且这样可以解决MIUI系统上拍照返回size为0的情况
                      */
                     uri = FileProvider.getUriForFile(activity, ProviderUtil.getFileProviderName(activity), takeImageFile);
+
                     //加入uri权限 要不三星手机不能拍照
                     List<ResolveInfo> resInfoList = activity.getPackageManager().queryIntentActivities(takePictureIntent, PackageManager.MATCH_DEFAULT_ONLY);
                     for (ResolveInfo resolveInfo : resInfoList) {
@@ -283,38 +307,22 @@ public class ImagePicker {
                     }
                 }
 
-                Log.e("nanchen", ProviderUtil.getFileProviderName(activity));
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
             }
         }
         activity.startActivityForResult(takePictureIntent, requestCode);
+        return uri;
     }
 
     /**
      * 根据系统时间、前缀、后缀产生一个文件
      */
+
     public static File createFile(File folder, String prefix, String suffix) {
         if (!folder.exists() || !folder.isDirectory()) folder.mkdirs();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.CHINA);
         String filename = prefix + dateFormat.format(new Date(System.currentTimeMillis())) + suffix;
         return new File(folder, filename);
-    }
-
-    /**
-     * 扫描图片
-     */
-    public static void galleryAddPic(Context context, File file) {
-        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-        Uri contentUri = Uri.fromFile(file);
-        mediaScanIntent.setData(contentUri);
-        context.sendBroadcast(mediaScanIntent);
-    }
-
-    /**
-     * 图片选中的监听
-     */
-    public interface OnImageSelectedListener {
-        void onImageSelected(int position, ImageItem item, boolean isAdd);
     }
 
     public void addOnImageSelectedListener(OnImageSelectedListener l) {
@@ -331,13 +339,6 @@ public class ImagePicker {
         if (isAdd) mSelectedImages.add(item);
         else mSelectedImages.remove(item);
         notifyImageSelectedChanged(position, item, isAdd);
-    }
-
-    public void setSelectedImages(ArrayList<ImageItem> selectedImages) {
-        if (selectedImages == null) {
-            return;
-        }
-        this.mSelectedImages = selectedImages;
     }
 
     private void notifyImageSelectedChanged(int position, ImageItem item, boolean isAdd) {
@@ -383,6 +384,13 @@ public class ImagePicker {
         outState.putInt("outPutY", outPutY);
         outState.putInt("focusWidth", focusWidth);
         outState.putInt("focusHeight", focusHeight);
+    }
+
+    /**
+     * 图片选中的监听
+     */
+    public interface OnImageSelectedListener {
+        void onImageSelected(int position, ImageItem item, boolean isAdd);
     }
 
 }

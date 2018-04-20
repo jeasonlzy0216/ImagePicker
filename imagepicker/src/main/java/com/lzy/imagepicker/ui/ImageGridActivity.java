@@ -2,15 +2,22 @@ package com.lzy.imagepicker.ui;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -27,10 +34,12 @@ import com.lzy.imagepicker.adapter.ImageRecyclerAdapter;
 import com.lzy.imagepicker.adapter.ImageRecyclerAdapter.OnImageItemClickListener;
 import com.lzy.imagepicker.bean.ImageFolder;
 import com.lzy.imagepicker.bean.ImageItem;
+import com.lzy.imagepicker.util.ProviderUtil;
 import com.lzy.imagepicker.util.Utils;
 import com.lzy.imagepicker.view.FolderPopUpWindow;
 import com.lzy.imagepicker.view.GridSpacingItemDecoration;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,6 +79,8 @@ public class ImageGridActivity extends ImageBaseActivity implements ImageDataSou
     private RecyclerView mRecyclerView;
     private ImageRecyclerAdapter mRecyclerAdapter;
 
+    Uri mUri;
+
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
@@ -99,7 +110,7 @@ public class ImageGridActivity extends ImageBaseActivity implements ImageDataSou
                 if (!(checkPermission(Manifest.permission.CAMERA))) {
                     ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, ImageGridActivity.REQUEST_PERMISSION_CAMERA);
                 } else {
-                    imagePicker.takePicture(this, ImagePicker.REQUEST_CODE_TAKE);
+                    mUri =  imagePicker.takePicture(this, ImagePicker.REQUEST_CODE_TAKE);
                 }
             }
             ArrayList<ImageItem> images = (ArrayList<ImageItem>) data.getSerializableExtra(EXTRAS_IMAGES);
@@ -281,6 +292,11 @@ public class ImageGridActivity extends ImageBaseActivity implements ImageDataSou
         }
     }
 
+    @Override
+    public void uri(Uri uri) {
+        mUri = uri;
+    }
+
     @SuppressLint("StringFormatMatches")
     @Override
     public void onImageSelected(int position, ImageItem item, boolean isAdd) {
@@ -317,10 +333,23 @@ public class ImageGridActivity extends ImageBaseActivity implements ImageDataSou
             if (resultCode == ImagePicker.RESULT_CODE_BACK) {
                 isOrigin = data.getBooleanExtra(ImagePreviewActivity.ISORIGIN, false);
             } else {
+
                 //从拍照界面返回
                 //点击 X , 没有选择照片
                 if (data.getSerializableExtra(ImagePicker.EXTRA_RESULT_ITEMS) == null) {
                     //什么都不做 直接调起相机
+                    if (resultCode == RESULT_OK) {
+                        ImageItem imageItem = new ImageItem();
+                        imageItem.path = getFilePathWithUri(mUri,this);
+                        imagePicker.clearSelectedImages();
+                        imagePicker.addSelectedImageItem(0,imageItem,true);
+                        Intent intent = new Intent();
+                        intent.putExtra(ImagePicker.EXTRA_RESULT_ITEMS, imagePicker.getSelectedImages());
+                        setResult(ImagePicker.RESULT_CODE_ITEMS, intent);   //单选不需要裁剪，返回数据
+                        finish();
+
+                        //setResult(ImagePicker.RESULT_CODE_ITEMS, );
+                    }
                 } else {
                     //说明是从裁剪页面过来的数据，直接返回就可以
                     setResult(ImagePicker.RESULT_CODE_ITEMS, data);
@@ -329,6 +358,7 @@ public class ImageGridActivity extends ImageBaseActivity implements ImageDataSou
             }
         } else {
             //如果是裁剪，因为裁剪指定了存储的Uri，所以返回的data一定为null
+
             if (resultCode == RESULT_OK && requestCode == ImagePicker.REQUEST_CODE_TAKE) {
                 //发送广播通知图片增加了
                 ImagePicker.galleryAddPic(this, imagePicker.getTakeImageFile());
@@ -372,4 +402,57 @@ public class ImageGridActivity extends ImageBaseActivity implements ImageDataSou
         }
     }
 
+    public static String getFilePathWithUri(Uri uri, Activity activity) {
+
+        File picture = getFileWithUri(uri, activity);
+        String picturePath = picture == null ? null : picture.getPath();
+        return picturePath;
+    }
+
+    /**
+     * 通过URI获取文件
+     *
+     * @param uri
+     * @param activity
+     * @return Author JPH
+     * Date 2016/10/25
+     */
+    public static File getFileWithUri(Uri uri, Activity activity) {
+        String picturePath = null;
+        String scheme = uri.getScheme();
+        if (ContentResolver.SCHEME_CONTENT.equals(scheme)) {
+            String[] filePathColumn = {MediaStore.Images.Media.DATA};
+            Cursor cursor = activity.getContentResolver().query(uri, filePathColumn, null, null, null);//从系统表中查询指定Uri对应的照片
+            cursor.moveToFirst();
+            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+            if (columnIndex >= 0) {
+                picturePath = cursor.getString(columnIndex);  //获取照片路径
+            } else if (TextUtils.equals(uri.getAuthority(), ProviderUtil.getFileProviderName(activity))) {
+                picturePath = parseOwnUri(activity, uri);
+            }
+            cursor.close();
+        } else if (ContentResolver.SCHEME_FILE.equals(scheme)) {
+            picturePath = uri.getPath();
+        }
+        return TextUtils.isEmpty(picturePath) ? null : new File(picturePath);
+    }
+
+    /**
+     * 将TakePhoto 提供的Uri 解析出文件绝对路径
+     *
+     * @param uri
+     * @return
+     */
+    public static String parseOwnUri(Context context, Uri uri) {
+        if (uri == null) {
+            return null;
+        }
+        String path;
+        if (TextUtils.equals(uri.getAuthority(), ProviderUtil.getFileProviderName(context))) {
+            path = new File(uri.getPath().replace("camera_photos/", "")).getAbsolutePath();
+        } else {
+            path = uri.getPath();
+        }
+        return path;
+    }
 }
