@@ -79,7 +79,7 @@ public class ImageGridActivity extends ImageBaseActivity implements ImageDataSou
     private RecyclerView mRecyclerView;
     private ImageRecyclerAdapter mRecyclerAdapter;
 
-    Uri mUri;
+    private Uri mUri;
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
