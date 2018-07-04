@@ -131,6 +131,7 @@ public class ImageDataSource implements LoaderManager.LoaderCallbacks<Cursor> {
                 allImagesFolder.images = allImages;
                 imageFolders.add(0, allImagesFolder);  //确保第一条是所有图片
             }
+            data.moveToFirst();
         }
 
         //回调接口，通知图片数据准备完成
