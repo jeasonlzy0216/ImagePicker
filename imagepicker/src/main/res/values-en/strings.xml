@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="ip_all_images">All Images</string>
+  <string name="ip_folder_image_count">Total%1$d</string>
+  <string name="ip_select_limit">Maximum%1$s</string>
+  <string name="ip_complete">Done</string>
+  <string name="ip_select_complete">Done(%1$d/%2$d)</string>
+  <string name="ip_preview">Preview</string>
+  <string name="ip_preview_count">Preview(%1$d)</string>
+  <string name="ip_photo_crop">Clip</string>
+  <string name="ip_origin">Original</string>
+  <string name="ip_origin_size">Original(%1$s)</string>
+</resources>
