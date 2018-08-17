@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import com.github.chrisbanes.photoview.OnPhotoTapListener;
 import com.github.chrisbanes.photoview.PhotoView;
-import com.github.chrisbanes.photoview.PhotoViewAttacher;
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.util.Utils;
 import com.lzy.imagepicker.bean.ImageItem;
