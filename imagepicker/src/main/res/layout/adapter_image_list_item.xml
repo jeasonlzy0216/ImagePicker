@@ -27,12 +27,13 @@
         android:id="@+id/checkView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="top|right"
+        android:layout_gravity="top|end"
         android:clickable="true"
+        android:focusable="true"
         android:descendantFocusability="blocksDescendants"
         android:paddingBottom="24dp"
-        android:paddingLeft="24dp"
-        android:paddingRight="10dp"
+        android:paddingStart="24dp"
+        android:paddingEnd="10dp"
         android:paddingTop="12dp">
 
         <com.lzy.imagepicker.view.SuperCheckBox

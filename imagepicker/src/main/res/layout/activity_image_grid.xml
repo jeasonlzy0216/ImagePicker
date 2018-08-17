@@ -1,5 +1,6 @@
 <LinearLayout android:id="@+id/content"
               xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:background="#000"
@@ -56,8 +57,8 @@
                     android:layout_height="wrap_content"
                     android:layout_alignBottom="@id/tv_dir"
                     android:layout_marginBottom="2dp"
-                    android:layout_marginLeft="4dp"
-                    android:layout_toRightOf="@id/tv_dir"
+                    android:layout_marginStart="4dp"
+                    android:layout_toEndOf="@id/tv_dir"
                     android:src="@mipmap/text_indicator"/>
 
             </RelativeLayout>
@@ -67,12 +68,12 @@
                 android:id="@+id/btn_preview"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:background="@null"
                 android:gravity="center"
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"
-                android:text="预览(3)"
+                tools:text="预览(3)"
                 android:textAllCaps="false"
                 android:textColor="#FFFFFF"
                 android:textSize="16sp"/>

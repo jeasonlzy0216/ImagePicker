@@ -34,9 +34,10 @@
                 style="@style/SuperCheckboxTheme"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="10dp"
-                android:paddingLeft="8dp"
-                android:text="原图(3.07M)"
+                android:layout_marginStart="10dp"
+                android:paddingStart="8dp"
+                android:paddingEnd="0dp"
+                tools:text="原图(3.07M)"
                 android:textColor="#FFF"
                 android:visibility="invisible" />
 
@@ -45,13 +46,14 @@
                 style="@style/SuperCheckboxTheme"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="12dp"
+                android:layout_marginEnd="12dp"
                 android:drawablePadding="4dp"
                 android:includeFontPadding="true"
-                android:paddingLeft="8dp"
-                android:text="选择"
+                android:paddingStart="8dp"
+                android:paddingEnd="0dp"
+                tools:text="选择"
                 android:textColor="#ffffff" />
         </RelativeLayout>
 

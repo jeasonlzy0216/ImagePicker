@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/bg_folder_item"
@@ -18,7 +19,7 @@
             android:layout_width="78dp"
             android:layout_height="78dp"
             android:layout_marginBottom="6dp"
-            android:layout_marginRight="6dp"
+            android:layout_marginEnd="6dp"
             android:scaleType="centerCrop"
             android:src="@drawable/ic_default_image" />
 
@@ -44,7 +45,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:text="共0张"
+            tools:text="共0张"
             android:textColor="#999999"
             android:textSize="12sp" />
     </LinearLayout>
@@ -53,8 +54,8 @@
         android:id="@+id/iv_folder_check"
         android:layout_width="24dp"
         android:layout_height="24dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="20dp"
         app:srcCompat="@drawable/ic_vector_check" />
 
 </LinearLayout>
