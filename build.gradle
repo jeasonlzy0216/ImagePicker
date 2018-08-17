@@ -26,6 +26,7 @@ subprojects {
             versionName build_versions.androidVersionName
             testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
             multiDexEnabled true
+            vectorDrawables.useSupportLibrary = true
         }
         lintOptions {
             abortOnError false
