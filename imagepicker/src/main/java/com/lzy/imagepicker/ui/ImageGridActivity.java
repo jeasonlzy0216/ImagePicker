@@ -149,13 +149,13 @@ public class ImageGridActivity extends ImageBaseActivity implements ImageDataSou
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 new ImageDataSource(this, null, this);
             } else {
-                showToast("权限被禁止，无法选择本地图片");
+                showToast(getString(R.string.ip_no_local_file_permission));
             }
         } else if (requestCode == REQUEST_PERMISSION_CAMERA) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 imagePicker.takePicture(this, ImagePicker.REQUEST_CODE_TAKE);
             } else {
-                showToast("权限被禁止，无法打开相机");
+                showToast(getString(R.string.ip_no_camera_permission));
             }
         }
     }

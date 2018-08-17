@@ -70,10 +70,10 @@ public class ImagePreviewDelActivity extends ImagePreviewBaseActivity implements
     /** 是否删除此张图片 */
     private void showDeleteDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("提示");
-        builder.setMessage("要删除这张照片吗？");
-        builder.setNegativeButton("取消", null);
-        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+        builder.setTitle(R.string.ip_hint);
+        builder.setMessage(R.string.ip_delete_picture_ask);
+        builder.setNegativeButton(R.string.ip_cancel, null);
+        builder.setPositiveButton(R.string.ip_sure, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 //移除当前图片刷新界面

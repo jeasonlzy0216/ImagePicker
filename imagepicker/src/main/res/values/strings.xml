@@ -10,4 +10,11 @@
     <string name="ip_photo_crop">图片裁剪</string>
     <string name="ip_origin">原图</string>
     <string name="ip_origin_size">原图(%1$s)</string>
+    <string name="ip_take_picture">拍摄照片</string>
+    <string name="ip_no_local_file_permission">权限被禁止，无法选择本地图片</string>
+    <string name="ip_no_camera_permission">权限被禁止，无法打开相机</string>
+    <string name="ip_hint">提示</string>
+    <string name="ip_delete_picture_ask">要删除这张照片吗？</string>
+    <string name="ip_cancel">取消</string>
+    <string name="ip_sure">确定</string>
 </resources>
