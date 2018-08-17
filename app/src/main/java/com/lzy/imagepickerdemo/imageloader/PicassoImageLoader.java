@@ -25,7 +25,7 @@ public class PicassoImageLoader implements ImageLoader {
 
     @Override
     public void displayImage(Activity activity, String path, ImageView imageView, int width, int height) {
-        Picasso.with(activity)//
+        Picasso.get()//
                 .load(Uri.fromFile(new File(path)))//
                 .placeholder(R.drawable.ic_default_image)//
                 .error(R.drawable.ic_default_image)//
@@ -37,7 +37,7 @@ public class PicassoImageLoader implements ImageLoader {
 
     @Override
     public void displayImagePreview(Activity activity, String path, ImageView imageView, int width, int height) {
-        Picasso.with(activity)//
+        Picasso.get()//
                 .load(Uri.fromFile(new File(path)))//
                 .resize(width, height)//
                 .centerInside()//
