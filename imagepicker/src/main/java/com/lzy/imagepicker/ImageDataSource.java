@@ -79,6 +79,7 @@ public class ImageDataSource implements LoaderManager.LoaderCallbacks<Cursor> {
         imageFolders.clear();
         if (data != null) {
             ArrayList<ImageItem> allImages = new ArrayList<>();   //所有图片的集合,不分文件夹
+              data.move(-1);//默认第一次进入的时候游标在-1的位置，读取的时候从0开始读取，但如果进入下一个界面返回此时游标在0，会从1开始读，导致第一个读取不到
             while (data.moveToNext()) {
                 //查询数据
                 String imageName = data.getString(data.getColumnIndexOrThrow(IMAGE_PROJECTION[0]));
