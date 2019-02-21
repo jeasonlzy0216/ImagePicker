@@ -1,20 +1,19 @@
 <resources>
-    <string name="ip_all_images">所有图片</string>
-    <string name="ip_folder_image_count">共%1$d张</string>
-    <string name="ip_preview_image_count" translatable="false">%1$d/%2$d</string>
-    <string name="ip_select_limit">最多选择%1$d张图片</string>
-    <string name="ip_complete">完成</string>
-    <string name="ip_select_complete">完成(%1$d/%2$d)</string>
-    <string name="ip_preview">预览</string>
-    <string name="ip_preview_count">预览(%1$d)</string>
-    <string name="ip_photo_crop">图片裁剪</string>
-    <string name="ip_origin">原图</string>
-    <string name="ip_origin_size">原图(%1$s)</string>
-    <string name="ip_take_picture">拍摄照片</string>
-    <string name="ip_no_local_file_permission">权限被禁止，无法选择本地图片</string>
-    <string name="ip_no_camera_permission">权限被禁止，无法打开相机</string>
-    <string name="ip_hint">提示</string>
-    <string name="ip_delete_picture_ask">要删除这张照片吗？</string>
-    <string name="ip_cancel">取消</string>
-    <string name="ip_sure">确定</string>
+    <string name="ip_all_images">All Images</string>
+    <string name="ip_folder_image_count">Total%1$d</string>
+    <string name="ip_select_limit">Maximum%1$ds</string>
+    <string name="ip_complete">Done</string>
+    <string name="ip_select_complete">Done(%1$d/%2$d)</string>
+    <string name="ip_preview">Preview</string>
+    <string name="ip_preview_count">Preview(%1$d)</string>
+    <string name="ip_photo_crop">Clip</string>
+    <string name="ip_origin">Original</string>
+    <string name="ip_origin_size">Original(%1$s)</string>
+    <string name="ip_take_picture">Take picture</string>
+    <string name="ip_no_local_file_permission">You don\'t have permission to select local images</string>
+    <string name="ip_no_camera_permission">You don\'t have permission to use camera</string>
+    <string name="ip_hint">Hint</string>
+    <string name="ip_cancel">Cancel</string>
+    <string name="ip_sure">Sure</string>
+    <string name="ip_delete_picture_ask">Are you sure you want to delete the picture?</string>
 </resources>
