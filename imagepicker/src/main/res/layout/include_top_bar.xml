@@ -1,67 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="48dp"
     android:background="@color/ip_color_primary"
+    android:clickable="true"
     android:focusable="true"
-    android:clickable="true">
+    >
 
-    <ImageView
-        android:id="@+id/btn_back"
-        android:layout_width="48dp"
-        android:layout_height="match_parent"
-        android:layout_centerVertical="true"
-        android:background="@drawable/selector_back_press"
-        android:padding="12dp"
-        app:srcCompat="@drawable/ic_arrow_back" />
+  <ImageView
+      android:id="@+id/btn_back"
+      android:layout_width="48dp"
+      android:layout_height="match_parent"
+      android:layout_centerVertical="true"
+      android:background="@drawable/selector_back_press"
+      android:padding="12dp"
+      app:srcCompat="@drawable/ic_arrow_back"
+      />
 
-    <View
-        android:layout_width="2px"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="12dp"
-        android:layout_marginTop="12dp"
-        android:layout_toEndOf="@id/btn_back"
-        android:background="#2E2E32" />
+  <View
+      android:layout_width="2px"
+      android:layout_height="match_parent"
+      android:layout_marginBottom="12dp"
+      android:layout_marginTop="12dp"
+      android:layout_toEndOf="@id/btn_back"
+      android:background="#2E2E32"
+      />
 
-    <TextView
-        android:id="@+id/tv_des"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_marginStart="12dp"
-        android:layout_toEndOf="@id/btn_back"
-        tools:text="图片"
-        android:textAppearance="@style/TextAppearance.AppCompat.Title"
-        android:textSize="18sp"
-        android:textColor="#ffffff" />
+  <TextView
+      android:id="@+id/tv_des"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_centerVertical="true"
+      android:layout_marginStart="12dp"
+      android:layout_toEndOf="@id/btn_back"
+      android:textAppearance="@style/TextAppearance.AppCompat.Title"
+      android:textColor="#ffffff"
+      android:textSize="18sp"
+      tools:text="图片"
+      />
 
-    <Button
-        android:id="@+id/btn_ok"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:background="@drawable/selector_top_ok"
-        android:minHeight="30dp"
-        android:minWidth="48dp"
-        android:paddingRight="16.0dp"
-        android:paddingLeft="16.0dp"
-        tools:text="完成(0/3)"
-        android:textColor="#ffffff"
-        android:textSize="14sp" />
+  <Button
+      android:id="@+id/btn_ok"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignParentEnd="true"
+      android:layout_centerVertical="true"
+      android:layout_marginLeft="8dp"
+      android:layout_marginRight="8dp"
+      android:background="@drawable/selector_top_ok"
+      android:minHeight="30dp"
+      android:minWidth="48dp"
+      android:paddingLeft="16.0dp"
+      android:paddingRight="16.0dp"
+      android:textColor="#ffffff"
+      android:textSize="14sp"
+      tools:text="完成(0/3)"
+      />
 
-    <android.support.v7.widget.AppCompatImageView
-        android:id="@+id/btn_del"
-        android:layout_width="48dp"
-        android:layout_height="match_parent"
-        android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true"
-        android:background="@drawable/selector_back_press"
-        android:padding="12dp"
-        app:srcCompat="@drawable/ic_vector_delete"
-        android:visibility="gone" />
+  <android.support.v7.widget.AppCompatImageView
+      android:id="@+id/btn_del"
+      android:layout_width="48dp"
+      android:layout_height="match_parent"
+      android:layout_alignParentEnd="true"
+      android:layout_centerVertical="true"
+      android:background="@drawable/selector_back_press"
+      android:padding="12dp"
+      android:visibility="gone"
+      app:srcCompat="@drawable/ic_vector_delete"
+      />
 </RelativeLayout>

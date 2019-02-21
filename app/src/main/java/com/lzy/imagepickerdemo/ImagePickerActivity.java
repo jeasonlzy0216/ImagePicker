@@ -3,7 +3,6 @@ package com.lzy.imagepickerdemo;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,17 +18,13 @@ import android.widget.RadioButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import androidx.appcompat.app.AppCompatActivity;
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.bean.ImageItem;
 import com.lzy.imagepicker.ui.ImageGridActivity;
 import com.lzy.imagepicker.view.CropImageView;
 import com.lzy.imagepickerdemo.imageloader.GlideImageLoader;
-import com.lzy.imagepickerdemo.imageloader.PicassoImageLoader;
-import com.lzy.imagepickerdemo.imageloader.UILImageLoader;
-import com.lzy.imagepickerdemo.imageloader.XUtils3ImageLoader;
 import com.lzy.imagepickerdemo.wxdemo.WxDemoActivity;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,7 +37,8 @@ import java.util.List;
  * 修订历史：
  * ================================================
  */
-public class ImagePickerActivity extends AppCompatActivity implements SeekBar.OnSeekBarChangeListener, CompoundButton.OnCheckedChangeListener, View.OnClickListener {
+public class ImagePickerActivity extends AppCompatActivity
+    implements SeekBar.OnSeekBarChangeListener, CompoundButton.OnCheckedChangeListener, View.OnClickListener {
 
     private ImagePicker imagePicker;
 
@@ -125,11 +121,11 @@ public class ImagePickerActivity extends AppCompatActivity implements SeekBar.On
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_open_gallery:
-                if (rb_uil.isChecked()) imagePicker.setImageLoader(new UILImageLoader());
+                if (rb_uil.isChecked()) imagePicker.setImageLoader(new GlideImageLoader());
                 else if (rb_glide.isChecked()) imagePicker.setImageLoader(new GlideImageLoader());
-                else if (rb_picasso.isChecked()) imagePicker.setImageLoader(new PicassoImageLoader());
+                else if (rb_picasso.isChecked()) imagePicker.setImageLoader(new GlideImageLoader());
                 else if (rb_fresco.isChecked()) imagePicker.setImageLoader(new GlideImageLoader());
-                else if (rb_xutils3.isChecked()) imagePicker.setImageLoader(new XUtils3ImageLoader());
+                else if (rb_xutils3.isChecked()) imagePicker.setImageLoader(new GlideImageLoader());
                 else if (rb_xutils.isChecked()) imagePicker.setImageLoader(new GlideImageLoader());
 
                 if (rb_single_select.isChecked()) imagePicker.setMultiMode(false);

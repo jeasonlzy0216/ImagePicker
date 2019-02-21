@@ -1,7 +1,5 @@
 dependencies {
-    compileOnly deps.support.app_compat
-    compileOnly deps.support.recyclerview
-    implementation (deps.PhotoView,{
-        exclude group: 'com.android.support'
-    })
+    compileOnly deps.androidx.appCompat
+    compileOnly deps.androidx.recyclerView
+    implementation (deps.PhotoView)
 }

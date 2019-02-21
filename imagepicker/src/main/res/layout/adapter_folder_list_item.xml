@@ -6,56 +6,63 @@
     android:layout_height="wrap_content"
     android:background="@drawable/bg_folder_item"
     android:gravity="center_vertical"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    >
 
-    <FrameLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/bg_image_folder"
-        android:layout_margin="12dp">
-
-        <ImageView
-            android:id="@+id/iv_cover"
-            android:layout_width="78dp"
-            android:layout_height="78dp"
-            android:layout_marginBottom="6dp"
-            android:layout_marginEnd="6dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/ic_default_image" />
-
-    </FrameLayout>
-
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="center_vertical"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/tv_folder_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/ip_all_images"
-            android:textColor="#212121"
-            android:textSize="14sp" />
-
-        <TextView
-            android:id="@+id/tv_image_count"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            tools:text="共0张"
-            android:textColor="#999999"
-            android:textSize="12sp" />
-    </LinearLayout>
+  <FrameLayout
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_margin="12dp"
+      android:background="@drawable/bg_image_folder"
+      >
 
     <ImageView
-        android:id="@+id/iv_folder_check"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="20dp"
-        app:srcCompat="@drawable/ic_vector_check" />
+        android:id="@+id/iv_cover"
+        android:layout_width="78dp"
+        android:layout_height="78dp"
+        android:layout_marginBottom="6dp"
+        android:layout_marginEnd="6dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_default_image"
+        />
+
+  </FrameLayout>
+
+  <LinearLayout
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      android:gravity="center_vertical"
+      android:orientation="vertical"
+      >
+
+    <TextView
+        android:id="@+id/tv_folder_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/ip_all_images"
+        android:textColor="#212121"
+        android:textSize="14sp"
+        />
+
+    <TextView
+        android:id="@+id/tv_image_count"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:textColor="#999999"
+        android:textSize="12sp"
+        tools:text="共0张"
+        />
+  </LinearLayout>
+
+  <ImageView
+      android:id="@+id/iv_folder_check"
+      android:layout_width="24dp"
+      android:layout_height="24dp"
+      android:layout_marginEnd="20dp"
+      android:layout_marginStart="8dp"
+      app:srcCompat="@drawable/ic_vector_check"
+      />
 
 </LinearLayout>

@@ -1,4 +1,5 @@
 <resources>
+    <string name="ip_preview_image_count" translatable="false">%1$d/%2$d</string>
     <string name="ip_all_images">All Images</string>
     <string name="ip_folder_image_count">Total%1$d</string>
     <string name="ip_select_limit">Maximum%1$ds</string>

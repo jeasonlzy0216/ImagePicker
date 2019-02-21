@@ -15,13 +15,11 @@ android {
 }
 dependencies {
     annotationProcessor deps.glide.compile
-    implementation deps.support.app_compat
-    implementation deps.support.annotations
-    implementation deps.support.recyclerview
+    annotationProcessor deps.androidx.annotations
+    implementation deps.androidx.appCompat
+    implementation deps.androidx.annotations
+    implementation deps.androidx.recyclerView
     implementation deps.glide.runtime
-    implementation deps.picasso
-    implementation deps.xutils
-    implementation deps.universal_image_loader
     implementation (deps.view_core,{
         exclude group: 'com.android.support'
     })

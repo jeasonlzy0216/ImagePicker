@@ -1,83 +1,93 @@
-<LinearLayout android:id="@+id/content"
-              xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="#000"
-              android:orientation="vertical">
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000"
+    android:orientation="vertical"
+    >
 
-    <include
-        android:id="@+id/top_bar"
-        layout="@layout/include_top_bar"/>
+  <include
+      layout="@layout/include_top_bar"
+      android:id="@+id/top_bar"
+      />
 
-    <RelativeLayout
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:background="#111111"
+      >
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#111111">
+        android:clipToPadding="false"
+        android:paddingBottom="50dp"
+        android:paddingLeft="2dp"
+        android:paddingRight="2dp"
+        android:paddingTop="2dp"
+        />
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clipToPadding="false"
-            android:paddingBottom="50dp"
-            android:paddingLeft="2dp"
-            android:paddingRight="2dp"
-            android:paddingTop="2dp"/>
+    <RelativeLayout
+        android:id="@+id/footer_bar"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/ip_color_primary"
+        >
 
-        <RelativeLayout
-            android:id="@+id/footer_bar"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_alignParentBottom="true"
-            android:background="@color/ip_color_primary">
+      <RelativeLayout
+          android:id="@+id/ll_dir"
+          android:layout_width="wrap_content"
+          android:layout_height="match_parent"
+          android:layout_centerVertical="true"
+          android:paddingLeft="16dp"
+          android:paddingRight="16dp"
+          >
 
-            <RelativeLayout
-                android:id="@+id/ll_dir"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_centerVertical="true"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp">
+        <TextView
+            android:id="@+id/tv_dir"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:ellipsize="end"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:text="@string/ip_all_images"
+            android:textColor="#CFCFCF"
+            android:textSize="16sp"
+            />
 
-                <TextView
-                    android:id="@+id/tv_dir"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:ellipsize="end"
-                    android:includeFontPadding="false"
-                    android:maxLines="1"
-                    android:text="@string/ip_all_images"
-                    android:textColor="#CFCFCF"
-                    android:textSize="16sp"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/tv_dir"
+            android:layout_marginBottom="2dp"
+            android:layout_marginStart="4dp"
+            android:layout_toEndOf="@id/tv_dir"
+            android:src="@mipmap/text_indicator"
+            />
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBottom="@id/tv_dir"
-                    android:layout_marginBottom="2dp"
-                    android:layout_marginStart="4dp"
-                    android:layout_toEndOf="@id/tv_dir"
-                    android:src="@mipmap/text_indicator"/>
-
-            </RelativeLayout>
+      </RelativeLayout>
 
 
-            <TextView
-                android:id="@+id/btn_preview"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_alignParentEnd="true"
-                android:background="@null"
-                android:gravity="center"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
-                tools:text="预览(3)"
-                android:textAllCaps="false"
-                android:textColor="#FFFFFF"
-                android:textSize="16sp"/>
+      <TextView
+          android:id="@+id/btn_preview"
+          android:layout_width="wrap_content"
+          android:layout_height="match_parent"
+          android:layout_alignParentEnd="true"
+          android:background="@null"
+          android:gravity="center"
+          android:paddingLeft="16dp"
+          android:paddingRight="16dp"
+          android:textAllCaps="false"
+          android:textColor="#FFFFFF"
+          android:textSize="16sp"
+          tools:text="预览(3)"
+          />
 
-        </RelativeLayout>
     </RelativeLayout>
+  </RelativeLayout>
 </LinearLayout>

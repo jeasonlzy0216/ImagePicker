@@ -3,64 +3,72 @@
     android:id="@+id/content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000">
+    android:background="#000"
+    >
 
-    <com.lzy.imagepicker.view.ViewPagerFixed
-        android:id="@+id/viewpager"
+  <com.lzy.imagepicker.view.ViewPagerFixed
+      android:id="@+id/viewpager"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:background="#000"
+      />
+
+  <include
+      layout="@layout/include_top_bar"
+      android:id="@+id/top_bar"
+      />
+
+  <LinearLayout
+      android:id="@+id/bottom_bar"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_alignParentBottom="true"
+      android:background="#cc22292c"
+      android:orientation="vertical"
+      android:visibility="gone"
+      tools:visibility="visible"
+      >
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#000" />
+        android:layout_height="48dp"
+        >
 
-    <include
-        android:id="@+id/top_bar"
-        layout="@layout/include_top_bar" />
+      <com.lzy.imagepicker.view.SuperCheckBox
+          android:id="@+id/cb_origin"
+          android:layout_width="wrap_content"
+          android:layout_height="match_parent"
+          android:layout_marginStart="10dp"
+          android:paddingEnd="0dp"
+          android:paddingStart="8dp"
+          android:textColor="#FFF"
+          android:visibility="invisible"
+          tools:text="原图(3.07M)"
+          style="@style/SuperCheckboxTheme"
+          />
 
-    <LinearLayout
-        android:id="@+id/bottom_bar"
+      <com.lzy.imagepicker.view.SuperCheckBox
+          android:id="@+id/cb_check"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentEnd="true"
+          android:layout_centerVertical="true"
+          android:layout_marginEnd="12dp"
+          android:drawablePadding="4dp"
+          android:includeFontPadding="true"
+          android:paddingEnd="0dp"
+          android:paddingStart="8dp"
+          android:textColor="#ffffff"
+          tools:text="选择"
+          style="@style/SuperCheckboxTheme"
+          />
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/margin_bottom"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="#cc22292c"
-        android:orientation="vertical"
-        android:visibility="gone"
-        tools:visibility="visible">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="48dp">
-
-            <com.lzy.imagepicker.view.SuperCheckBox
-                android:id="@+id/cb_origin"
-                style="@style/SuperCheckboxTheme"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginStart="10dp"
-                android:paddingStart="8dp"
-                android:paddingEnd="0dp"
-                tools:text="原图(3.07M)"
-                android:textColor="#FFF"
-                android:visibility="invisible" />
-
-            <com.lzy.imagepicker.view.SuperCheckBox
-                android:id="@+id/cb_check"
-                style="@style/SuperCheckboxTheme"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="12dp"
-                android:drawablePadding="4dp"
-                android:includeFontPadding="true"
-                android:paddingStart="8dp"
-                android:paddingEnd="0dp"
-                tools:text="选择"
-                android:textColor="#ffffff" />
-        </RelativeLayout>
-
-        <View
-            android:id="@+id/margin_bottom"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:background="#000" />
-    </LinearLayout>
+        android:layout_height="0dp"
+        android:background="#000"
+        />
+  </LinearLayout>
 </RelativeLayout>
