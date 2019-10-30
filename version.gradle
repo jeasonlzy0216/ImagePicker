@@ -1,7 +1,7 @@
 ext.deps = [:]
 def versions = [:]
-versions.android_gradle_plugin = "3.4.0-beta04"
-versions.gradle_bintray_plugin = "1.7"
+versions.android_gradle_plugin = "3.5.1"
+versions.gradle_bintray_plugin = "1.8.4"
 versions.android_maven_gradle_plugin = "1.5"
 versions.support = "27.1.1"
 versions.glide = "4.9.0"
@@ -53,8 +53,8 @@ deps.glide = glide
 
 def build_versions = [:]
 build_versions.min_sdk = 19
-build_versions.target_sdk = 28
-build_versions.compile_sdk = 28
+build_versions.target_sdk = 29
+build_versions.compile_sdk = 29
 ext.build_versions = build_versions
 
 def addRepos(RepositoryHandler handler) {

@@ -129,7 +129,7 @@ public class WxDemoActivity extends AppCompatActivity implements ImagePickerAdap
             default:
                 //打开预览
                 Intent intentPreview = new Intent(this, ImagePreviewDelActivity.class);
-                intentPreview.putExtra(ImagePicker.EXTRA_IMAGE_ITEMS, (ArrayList<ImageItem>) adapter.getImages());
+                intentPreview.putParcelableArrayListExtra(ImagePicker.EXTRA_IMAGE_ITEMS, adapter.getImages());
                 intentPreview.putExtra(ImagePicker.EXTRA_SELECTED_IMAGE_POSITION, position);
                 intentPreview.putExtra(ImagePicker.EXTRA_FROM_ITEMS, true);
                 startActivityForResult(intentPreview, REQUEST_CODE_PREVIEW);
@@ -145,7 +145,7 @@ public class WxDemoActivity extends AppCompatActivity implements ImagePickerAdap
         if (resultCode == ImagePicker.RESULT_CODE_ITEMS) {
             //添加图片返回
             if (data != null && requestCode == REQUEST_CODE_SELECT) {
-                images = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker.EXTRA_RESULT_ITEMS);
+                images = data.getParcelableArrayListExtra(ImagePicker.EXTRA_RESULT_ITEMS);
                 if (images != null) {
                     selImageList.addAll(images);
                     adapter.setImages(selImageList);
@@ -154,7 +154,7 @@ public class WxDemoActivity extends AppCompatActivity implements ImagePickerAdap
         } else if (resultCode == ImagePicker.RESULT_CODE_BACK) {
             //预览图片返回
             if (data != null && requestCode == REQUEST_CODE_PREVIEW) {
-                images = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker.EXTRA_IMAGE_ITEMS);
+                images = data.getParcelableArrayListExtra(ImagePicker.EXTRA_IMAGE_ITEMS);
                 if (images != null) {
                     selImageList.clear();
                     selImageList.addAll(images);

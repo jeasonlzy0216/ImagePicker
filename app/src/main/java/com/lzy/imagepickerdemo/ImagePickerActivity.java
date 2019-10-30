@@ -3,6 +3,7 @@ package com.lzy.imagepickerdemo;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,32 +69,32 @@ public class ImagePickerActivity extends AppCompatActivity
         imagePicker = ImagePicker.getInstance();
         imagePicker.setImageLoader(new GlideImageLoader());
 
-        rb_uil = (RadioButton) findViewById(R.id.rb_uil);
-        rb_glide = (RadioButton) findViewById(R.id.rb_glide);
-        rb_picasso = (RadioButton) findViewById(R.id.rb_picasso);
-        rb_fresco = (RadioButton) findViewById(R.id.rb_fresco);
-        rb_xutils3 = (RadioButton) findViewById(R.id.rb_xutils3);
-        rb_xutils = (RadioButton) findViewById(R.id.rb_xutils);
-        rb_single_select = (RadioButton) findViewById(R.id.rb_single_select);
-        rb_muti_select = (RadioButton) findViewById(R.id.rb_muti_select);
-        rb_crop_square = (RadioButton) findViewById(R.id.rb_crop_square);
-        rb_crop_circle = (RadioButton) findViewById(R.id.rb_crop_circle);
+        rb_uil = findViewById(R.id.rb_uil);
+        rb_glide = findViewById(R.id.rb_glide);
+        rb_picasso = findViewById(R.id.rb_picasso);
+        rb_fresco = findViewById(R.id.rb_fresco);
+        rb_xutils3 = findViewById(R.id.rb_xutils3);
+        rb_xutils = findViewById(R.id.rb_xutils);
+        rb_single_select = findViewById(R.id.rb_single_select);
+        rb_muti_select = findViewById(R.id.rb_muti_select);
+        rb_crop_square = findViewById(R.id.rb_crop_square);
+        rb_crop_circle = findViewById(R.id.rb_crop_circle);
         rb_glide.setChecked(true);
         rb_muti_select.setChecked(true);
         rb_crop_square.setChecked(true);
 
-        et_crop_width = (EditText) findViewById(R.id.et_crop_width);
+        et_crop_width = findViewById(R.id.et_crop_width);
         et_crop_width.setText("280");
-        et_crop_height = (EditText) findViewById(R.id.et_crop_height);
+        et_crop_height = findViewById(R.id.et_crop_height);
         et_crop_height.setText("280");
-        et_crop_radius = (EditText) findViewById(R.id.et_crop_radius);
+        et_crop_radius = findViewById(R.id.et_crop_radius);
         et_crop_radius.setText("140");
-        et_outputx = (EditText) findViewById(R.id.et_outputx);
+        et_outputx = findViewById(R.id.et_outputx);
         et_outputx.setText("800");
-        et_outputy = (EditText) findViewById(R.id.et_outputy);
+        et_outputy = findViewById(R.id.et_outputy);
         et_outputy.setText("800");
 
-        tv_select_limit = (TextView) findViewById(R.id.tv_select_limit);
+        tv_select_limit = findViewById(R.id.tv_select_limit);
         SeekBar sb_select_limit = (SeekBar) findViewById(R.id.sb_select_limit);
         sb_select_limit.setMax(15);
         sb_select_limit.setOnSeekBarChangeListener(this);
@@ -198,7 +199,7 @@ public class ImagePickerActivity extends AppCompatActivity
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == ImagePicker.RESULT_CODE_ITEMS) {
             if (data != null && requestCode == 100) {
-                images = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker.EXTRA_RESULT_ITEMS);
+                images = data.getParcelableArrayListExtra(ImagePicker.EXTRA_RESULT_ITEMS);
                 MyAdapter adapter = new MyAdapter(images);
                 gridView.setAdapter(adapter);
             } else {
@@ -249,7 +250,7 @@ public class ImagePickerActivity extends AppCompatActivity
             } else {
                 imageView = (ImageView) convertView;
             }
-            imagePicker.getImageLoader().displayImage(ImagePickerActivity.this, getItem(position).path, imageView, size, size);
+            imagePicker.getImageLoader().displayImage(ImagePickerActivity.this, getItem(position).uri, imageView, size, size);
             return imageView;
         }
     }

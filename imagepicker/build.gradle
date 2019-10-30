@@ -1,5 +1,6 @@
 dependencies {
     compileOnly deps.androidx.appCompat
     compileOnly deps.androidx.recyclerView
-    implementation (deps.PhotoView)
+    api deps.PhotoView
 }
+apply from: '../bintray.gradle'

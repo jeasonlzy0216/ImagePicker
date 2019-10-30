@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
@@ -44,7 +43,6 @@ import java.util.Locale;
  */
 public class ImagePicker {
 
-    public static final String TAG = ImagePicker.class.getSimpleName();
     public static final int REQUEST_CODE_TAKE = 1001;
     public static final int REQUEST_CODE_CROP = 1002;
     public static final int REQUEST_CODE_PREVIEW = 1003;
@@ -69,7 +67,6 @@ public class ImagePicker {
     private CropImageView.Style style = CropImageView.Style.RECTANGLE; //裁剪框的形状
     private File cropCacheFolder;
     private File takeImageFile;
-    public Bitmap cropBitmap;
 
     private ArrayList<ImageItem> mSelectedImages = new ArrayList<>();   //选中的图片集合
     private List<ImageFolder> mImageFolders;      //所有的图片文件夹
@@ -175,9 +172,9 @@ public class ImagePicker {
         return cropCacheFolder;
     }
 
-    public void setCropCacheFolder(File cropCacheFolder) {
-        this.cropCacheFolder = cropCacheFolder;
-    }
+//    public void setCropCacheFolder(File cropCacheFolder) {
+//        this.cropCacheFolder = cropCacheFolder;
+//    }
 
     public ImageLoader getImageLoader() {
         return imageLoader;
@@ -195,17 +192,17 @@ public class ImagePicker {
         this.style = style;
     }
 
-    public List<ImageFolder> getImageFolders() {
-        return mImageFolders;
-    }
+//    public List<ImageFolder> getImageFolders() {
+//        return mImageFolders;
+//    }
 
     public void setImageFolders(List<ImageFolder> imageFolders) {
         mImageFolders = imageFolders;
     }
 
-    public int getCurrentImageFolderPosition() {
-        return mCurrentImageFolderPosition;
-    }
+//    public int getCurrentImageFolderPosition() {
+//        return mCurrentImageFolderPosition;
+//    }
 
     public void setCurrentImageFolderPosition(int mCurrentSelectedImageSetPosition) {
         mCurrentImageFolderPosition = mCurrentSelectedImageSetPosition;
@@ -258,34 +255,31 @@ public class ImagePicker {
         if (takePictureIntent.resolveActivity(activity.getPackageManager()) != null) {
             if (Utils.existSDCard()) takeImageFile = new File(Environment.getExternalStorageDirectory(), "/DCIM/camera/");
             else takeImageFile = Environment.getDataDirectory();
-            takeImageFile = createFile(takeImageFile, "IMG_", ".jpg");
-            if (takeImageFile != null) {
-                // 默认情况下，即不需要指定intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
-                // 照相机有自己默认的存储路径，拍摄的照片将返回一个缩略图。如果想访问原始图片，
-                // 可以通过dat extra能够得到原始图片位置。即，如果指定了目标uri，data就没有数据，
-                // 如果没有指定uri，则data就返回有数据！
+            takeImageFile = createFile(takeImageFile);
+            // 默认情况下，即不需要指定intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+            // 照相机有自己默认的存储路径，拍摄的照片将返回一个缩略图。如果想访问原始图片，
+            // 可以通过dat extra能够得到原始图片位置。即，如果指定了目标uri，data就没有数据，
+            // 如果没有指定uri，则data就返回有数据！
 
-                Uri uri;
-                if (VERSION.SDK_INT <= VERSION_CODES.M) {
-                    uri = Uri.fromFile(takeImageFile);
-                } else {
-
-                    /**
-                     * 7.0 调用系统相机拍照不再允许使用Uri方式，应该替换为FileProvider
-                     * 并且这样可以解决MIUI系统上拍照返回size为0的情况
-                     */
-                    uri = FileProvider.getUriForFile(activity, ProviderUtil.getFileProviderName(activity), takeImageFile);
-                    //加入uri权限 要不三星手机不能拍照
-                    List<ResolveInfo> resInfoList = activity.getPackageManager().queryIntentActivities(takePictureIntent, PackageManager.MATCH_DEFAULT_ONLY);
-                    for (ResolveInfo resolveInfo : resInfoList) {
-                        String packageName = resolveInfo.activityInfo.packageName;
-                        activity.grantUriPermission(packageName, uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                    }
+            Uri uri;
+            if (VERSION.SDK_INT <= VERSION_CODES.M) {
+                uri = Uri.fromFile(takeImageFile);
+            } else {
+                /*
+                 * 7.0 调用系统相机拍照不再允许使用Uri方式，应该替换为FileProvider
+                 * 并且这样可以解决MIUI系统上拍照返回size为0的情况
+                 */
+                uri = FileProvider.getUriForFile(activity, ProviderUtil.getFileProviderName(activity), takeImageFile);
+                //加入uri权限 要不三星手机不能拍照
+                List<ResolveInfo> resInfoList = activity.getPackageManager().queryIntentActivities(takePictureIntent, PackageManager.MATCH_DEFAULT_ONLY);
+                for (ResolveInfo resolveInfo : resInfoList) {
+                    String packageName = resolveInfo.activityInfo.packageName;
+                    activity.grantUriPermission(packageName, uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
                 }
-
-                Log.e("nanchen", ProviderUtil.getFileProviderName(activity));
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
             }
+
+            Log.e("nanchen", ProviderUtil.getFileProviderName(activity));
+            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
         }
         activity.startActivityForResult(takePictureIntent, requestCode);
     }
@@ -293,10 +287,10 @@ public class ImagePicker {
     /**
      * 根据系统时间、前缀、后缀产生一个文件
      */
-    public static File createFile(File folder, String prefix, String suffix) {
+    private static File createFile(File folder) {
         if (!folder.exists() || !folder.isDirectory()) folder.mkdirs();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.CHINA);
-        String filename = prefix + dateFormat.format(new Date(System.currentTimeMillis())) + suffix;
+        String filename = "IMG_" + dateFormat.format(new Date(System.currentTimeMillis())) + ".jpg";
         return new File(folder, filename);
     }
 

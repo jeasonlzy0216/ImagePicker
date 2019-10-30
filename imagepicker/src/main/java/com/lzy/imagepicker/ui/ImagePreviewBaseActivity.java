@@ -46,10 +46,10 @@ public abstract class ImagePreviewBaseActivity extends ImageBaseActivity {
 
         if (isFromItems) {
             // 据说这样会导致大量图片崩溃
-            mImageItems = (ArrayList<ImageItem>) getIntent().getSerializableExtra(ImagePicker.EXTRA_IMAGE_ITEMS);
+            mImageItems = getIntent().getParcelableArrayListExtra(ImagePicker.EXTRA_IMAGE_ITEMS);
         } else {
             // 下面采用弱引用会导致预览崩溃
-            mImageItems = (ArrayList<ImageItem>) DataHolder.getInstance().retrieve(DataHolder.DH_CURRENT_IMAGE_FOLDER_ITEMS);
+            mImageItems = DataHolder.getInstance().retrieve(DataHolder.DH_CURRENT_IMAGE_FOLDER_ITEMS);
         }
 
         imagePicker = ImagePicker.getInstance();
@@ -73,9 +73,9 @@ public abstract class ImagePreviewBaseActivity extends ImageBaseActivity {
             }
         });
 
-        mTitleCount = (TextView) findViewById(R.id.tv_des);
+        mTitleCount = findViewById(R.id.tv_des);
 
-        mViewPager = (ViewPagerFixed) findViewById(R.id.viewpager);
+        mViewPager = findViewById(R.id.viewpager);
         mAdapter = new ImagePageAdapter(this, mImageItems);
         mAdapter.setPhotoViewClickListener(new ImagePageAdapter.PhotoViewClickListener() {
             @Override

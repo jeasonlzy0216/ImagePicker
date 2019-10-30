@@ -9,6 +9,7 @@ import android.widget.AbsListView;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.RecyclerView.ViewHolder;
@@ -79,8 +80,9 @@ public class ImageRecyclerAdapter extends RecyclerView.Adapter<ViewHolder> {
         mInflater = LayoutInflater.from(activity);
     }
 
+    @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         if (viewType == ITEM_TYPE_CAMERA){
             return new CameraViewHolder(mInflater.inflate(R.layout.adapter_camera_item,parent,false));
         }
@@ -88,7 +90,7 @@ public class ImageRecyclerAdapter extends RecyclerView.Adapter<ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         if (holder instanceof CameraViewHolder){
             ((CameraViewHolder)holder).bindCamera();
         }else if (holder instanceof ImageViewHolder){
@@ -133,10 +135,10 @@ public class ImageRecyclerAdapter extends RecyclerView.Adapter<ViewHolder> {
         ImageViewHolder(View itemView) {
             super(itemView);
             rootView = itemView;
-            ivThumb = (ImageView) itemView.findViewById(R.id.iv_thumb);
+            ivThumb = itemView.findViewById(R.id.iv_thumb);
             mask = itemView.findViewById(R.id.mask);
             checkView=itemView.findViewById(R.id.checkView);
-            cbCheck = (SuperCheckBox) itemView.findViewById(R.id.cb_check);
+            cbCheck = itemView.findViewById(R.id.cb_check);
             itemView.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, mImageSize)); //让图片是个正方形
         }
 
@@ -177,7 +179,7 @@ public class ImageRecyclerAdapter extends RecyclerView.Adapter<ViewHolder> {
             } else {
                 cbCheck.setVisibility(View.GONE);
             }
-            imagePicker.getImageLoader().displayImage(mActivity, imageItem.path, ivThumb, mImageSize, mImageSize); //显示图片
+            imagePicker.getImageLoader().displayImage(mActivity, imageItem.uri, ivThumb, mImageSize, mImageSize); //显示图片
         }
 
     }

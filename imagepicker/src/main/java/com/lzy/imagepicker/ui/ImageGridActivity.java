@@ -130,14 +130,15 @@ public class ImageGridActivity extends ImageBaseActivity implements ImageDataSou
 
         onImageSelected(0, null, false);
 
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN) {
-            if (checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                new ImageDataSource(this, null, this);
-            } else {
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_PERMISSION_STORAGE);
-            }
-        } else {
+        if (checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                && checkPermission(Manifest.permission.READ_EXTERNAL_STORAGE)) {
             new ImageDataSource(this, null, this);
+        } else {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                            Manifest.permission.READ_EXTERNAL_STORAGE
+                    }, REQUEST_PERMISSION_STORAGE);
         }
     }
 
@@ -170,7 +171,7 @@ public class ImageGridActivity extends ImageBaseActivity implements ImageDataSou
         int id = v.getId();
         if (id == R.id.btn_ok) {
             Intent intent = new Intent();
-            intent.putExtra(ImagePicker.EXTRA_RESULT_ITEMS, imagePicker.getSelectedImages());
+            intent.putParcelableArrayListExtra(ImagePicker.EXTRA_RESULT_ITEMS, imagePicker.getSelectedImages());
             setResult(ImagePicker.RESULT_CODE_ITEMS, intent);  //多选不允许裁剪裁剪，返回数据
             finish();
         } else if (id == R.id.ll_dir) {
@@ -193,7 +194,7 @@ public class ImageGridActivity extends ImageBaseActivity implements ImageDataSou
         } else if (id == R.id.btn_preview) {
             Intent intent = new Intent(ImageGridActivity.this, ImagePreviewActivity.class);
             intent.putExtra(ImagePicker.EXTRA_SELECTED_IMAGE_POSITION, 0);
-            intent.putExtra(ImagePicker.EXTRA_IMAGE_ITEMS, imagePicker.getSelectedImages());
+            intent.putParcelableArrayListExtra(ImagePicker.EXTRA_IMAGE_ITEMS, imagePicker.getSelectedImages());
             intent.putExtra(ImagePreviewActivity.ISORIGIN, isOrigin);
             intent.putExtra(ImagePicker.EXTRA_FROM_ITEMS, true);
             startActivityForResult(intent, ImagePicker.REQUEST_CODE_PREVIEW);
@@ -274,7 +275,7 @@ public class ImageGridActivity extends ImageBaseActivity implements ImageDataSou
                 startActivityForResult(intent, ImagePicker.REQUEST_CODE_CROP);  //单选需要裁剪，进入裁剪界面
             } else {
                 Intent intent = new Intent();
-                intent.putExtra(ImagePicker.EXTRA_RESULT_ITEMS, imagePicker.getSelectedImages());
+                intent.putParcelableArrayListExtra(ImagePicker.EXTRA_RESULT_ITEMS, imagePicker.getSelectedImages());
                 setResult(ImagePicker.RESULT_CODE_ITEMS, intent);   //单选不需要裁剪，返回数据
                 finish();
             }
@@ -319,7 +320,7 @@ public class ImageGridActivity extends ImageBaseActivity implements ImageDataSou
             } else {
                 //从拍照界面返回
                 //点击 X , 没有选择照片
-                if (data.getSerializableExtra(ImagePicker.EXTRA_RESULT_ITEMS) == null) {
+                if (!data.hasExtra(ImagePicker.EXTRA_RESULT_ITEMS)) {
                     //什么都不做 直接调起相机
                 } else {
                     //说明是从裁剪页面过来的数据，直接返回就可以
@@ -362,7 +363,7 @@ public class ImageGridActivity extends ImageBaseActivity implements ImageDataSou
                     startActivityForResult(intent, ImagePicker.REQUEST_CODE_CROP);  //单选需要裁剪，进入裁剪界面
                 } else {
                     Intent intent = new Intent();
-                    intent.putExtra(ImagePicker.EXTRA_RESULT_ITEMS, imagePicker.getSelectedImages());
+                    intent.putParcelableArrayListExtra(ImagePicker.EXTRA_RESULT_ITEMS, imagePicker.getSelectedImages());
                     setResult(ImagePicker.RESULT_CODE_ITEMS, intent);   //单选不需要裁剪，返回数据
                     finish();
                 }

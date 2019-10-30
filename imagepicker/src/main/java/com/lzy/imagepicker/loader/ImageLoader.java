@@ -1,6 +1,7 @@
 package com.lzy.imagepicker.loader;
 
 import android.app.Activity;
+import android.net.Uri;
 import android.widget.ImageView;
 
 import java.io.Serializable;
@@ -14,11 +15,12 @@ import java.io.Serializable;
  * 修订历史：
  * ================================================
  */
+@SuppressWarnings("unused")
 public interface ImageLoader extends Serializable {
 
-    void displayImage(Activity activity, String path, ImageView imageView, int width, int height);
+    void displayImage(Activity activity, Uri uri, ImageView imageView, int width, int height);
 
-    void displayImagePreview(Activity activity, String path, ImageView imageView, int width, int height);
+    void displayImagePreview(Activity activity, Uri uri, ImageView imageView, int width, int height);
 
     void clearMemoryCache();
 }

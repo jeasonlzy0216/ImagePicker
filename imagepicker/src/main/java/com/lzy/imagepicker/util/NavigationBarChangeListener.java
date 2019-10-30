@@ -11,7 +11,7 @@ import android.view.ViewTreeObserver;
  */
 public class NavigationBarChangeListener implements ViewTreeObserver.OnGlobalLayoutListener {
 
-    public static final int ORIENTATION_VERTICAL = 1;           //监听竖屏模式导航栏的显示和隐藏
+    private static final int ORIENTATION_VERTICAL = 1;           //监听竖屏模式导航栏的显示和隐藏
     public static final int ORIENTATION_HORIZONTAL = 2;         //监听横屏模式导航栏的显示和隐藏
 
     private Rect rect;
@@ -20,7 +20,7 @@ public class NavigationBarChangeListener implements ViewTreeObserver.OnGlobalLay
     private int orientation;
     private OnSoftInputStateChangeListener listener;
 
-    public NavigationBarChangeListener(View rootView, int orientation) {
+    private NavigationBarChangeListener(View rootView, int orientation) {
         this.rootView = rootView;
         this.orientation = orientation;
         rect = new Rect();

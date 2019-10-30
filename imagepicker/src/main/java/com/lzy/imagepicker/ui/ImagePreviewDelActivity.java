@@ -29,7 +29,7 @@ public class ImagePreviewDelActivity extends ImagePreviewBaseActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        ImageView mBtnDel = (ImageView) findViewById(R.id.btn_del);
+        ImageView mBtnDel = findViewById(R.id.btn_del);
         mBtnDel.setOnClickListener(this);
         mBtnDel.setVisibility(View.VISIBLE);
         topBar.findViewById(R.id.btn_back).setOnClickListener(this);
@@ -94,7 +94,7 @@ public class ImagePreviewDelActivity extends ImagePreviewBaseActivity implements
     public void onBackPressed() {
         Intent intent = new Intent();
         //带回最新数据
-        intent.putExtra(ImagePicker.EXTRA_IMAGE_ITEMS, mImageItems);
+        intent.putParcelableArrayListExtra(ImagePicker.EXTRA_IMAGE_ITEMS, mImageItems);
         setResult(ImagePicker.RESULT_CODE_BACK, intent);
         finish();
         super.onBackPressed();

@@ -1,11 +1,11 @@
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 
-version = "0.6.1"              // 数据仓库依赖第三部分
+version = gitVersionTag()             // 数据仓库依赖第三部分
 
-def siteUrl = 'https://github.com/jeasonlzy/ImagePicker'
-def gitUrl = 'https://github.com/jeasonlzy/ImagePicker.git'
-group = "com.lzy.widget"       // 数据仓库依赖第一部分
+def siteUrl = 'https://github.com/ggggxiaolong/ImagePicker'
+def gitUrl = 'https://github.com/ggggxiaolong/ImagePicker.git'
+group = "com.mrtan.android"       // 数据仓库依赖第一部分
 
 install {
     repositories.mavenInstaller {
@@ -22,9 +22,9 @@ install {
                 }
                 developers {
                     developer {
-                        id 'jeasonlzy'                // 开发者信息
-                        name 'LiaoZiYao'              // 开发者信息
-                        email 'liaojeason@126.com'    // 开发者信息
+                        id 'mrtan'                // 开发者信息
+                        name 'TanXiaoLong'              // 开发者信息
+                        email 'freemrtan@gmail.com'    // 开发者信息
                     }
                 }
                 scm {
@@ -82,4 +82,13 @@ bintray {
         licenses = ["Apache-2.0"]
         publish = true
     }
+}
+
+def gitVersionTag() {
+    def out = new ByteArrayOutputStream()
+    exec {
+        commandLine 'git', 'describe', '--tags'
+        standardOutput = out
+    }
+    return out.toString().trim()
 }

@@ -80,7 +80,7 @@ public class ImageFolderAdapter extends BaseAdapter {
         ImageFolder folder = getItem(position);
         holder.folderName.setText(folder.name);
         holder.imageCount.setText(mActivity.getString(R.string.ip_folder_image_count, folder.images.size()));
-        imagePicker.getImageLoader().displayImage(mActivity, folder.cover.path, holder.cover, mImageSize, mImageSize);
+        imagePicker.getImageLoader().displayImage(mActivity, folder.cover.uri, holder.cover, mImageSize, mImageSize);
 
         if (lastSelected == position) {
             holder.folderCheck.setVisibility(View.VISIBLE);
@@ -109,11 +109,11 @@ public class ImageFolderAdapter extends BaseAdapter {
         TextView imageCount;
         ImageView folderCheck;
 
-        public ViewHolder(View view) {
-            cover = (ImageView) view.findViewById(R.id.iv_cover);
-            folderName = (TextView) view.findViewById(R.id.tv_folder_name);
-            imageCount = (TextView) view.findViewById(R.id.tv_image_count);
-            folderCheck = (ImageView) view.findViewById(R.id.iv_folder_check);
+        private ViewHolder(View view) {
+            cover = view.findViewById(R.id.iv_cover);
+            folderName = view.findViewById(R.id.tv_folder_name);
+            imageCount = view.findViewById(R.id.tv_image_count);
+            folderCheck = view.findViewById(R.id.iv_folder_check);
             view.setTag(this);
         }
     }

@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.ImageView;
+
+import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
 import com.github.chrisbanes.photoview.OnPhotoTapListener;
 import com.github.chrisbanes.photoview.PhotoView;
@@ -29,7 +31,7 @@ public class ImagePageAdapter extends PagerAdapter {
     private int screenWidth;
     private int screenHeight;
     private ImagePicker imagePicker;
-    private ArrayList<ImageItem> images = new ArrayList<>();
+    private ArrayList<ImageItem> images;
     private Activity mActivity;
     public PhotoViewClickListener listener;
 
@@ -51,11 +53,12 @@ public class ImagePageAdapter extends PagerAdapter {
         this.listener = listener;
     }
 
+    @NonNull
     @Override
-    public Object instantiateItem(ViewGroup container, int position) {
+    public Object instantiateItem(@NonNull ViewGroup container, int position) {
         PhotoView photoView = new PhotoView(mActivity);
         ImageItem imageItem = images.get(position);
-        imagePicker.getImageLoader().displayImagePreview(mActivity, imageItem.path, photoView, screenWidth, screenHeight);
+        imagePicker.getImageLoader().displayImagePreview(mActivity, imageItem.uri, photoView, screenWidth, screenHeight);
         photoView.setOnPhotoTapListener(new OnPhotoTapListener() {
             @Override public void onPhotoTap(ImageView view, float x, float y) {
                 if (listener != null) listener.OnPhotoTapListener(view, x, y);
@@ -71,17 +74,17 @@ public class ImagePageAdapter extends PagerAdapter {
     }
 
     @Override
-    public boolean isViewFromObject(View view, Object object) {
+    public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
         return view == object;
     }
 
     @Override
-    public void destroyItem(ViewGroup container, int position, Object object) {
+    public void destroyItem(ViewGroup container, int position, @NonNull Object object) {
         container.removeView((View) object);
     }
 
     @Override
-    public int getItemPosition(Object object) {
+    public int getItemPosition(@NonNull Object object) {
         return POSITION_NONE;
     }
 

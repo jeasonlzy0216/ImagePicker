@@ -19,7 +19,7 @@ import java.io.IOException;
  * Email: liushilin520@foxmail.com
  * Date: 2017-03-20  13:27
  */
-
+@SuppressWarnings("unused")
 public class BitmapUtil {
 
     private BitmapUtil() {
@@ -63,7 +63,7 @@ public class BitmapUtil {
      * @param degree 指定的旋转角度
      * @return 旋转后的图片
      */
-    public static Bitmap rotateBitmapByDegree(Bitmap bitmap, int degree) {
+    private static Bitmap rotateBitmapByDegree(Bitmap bitmap, int degree) {
         // 根据旋转角度，生成旋转矩阵
         Matrix matrix = new Matrix();
         matrix.postRotate(degree);

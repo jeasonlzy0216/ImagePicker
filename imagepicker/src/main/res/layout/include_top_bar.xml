@@ -10,7 +10,7 @@
     android:focusable="true"
     >
 
-  <ImageView
+  <androidx.appcompat.widget.AppCompatImageView
       android:id="@+id/btn_back"
       android:layout_width="48dp"
       android:layout_height="match_parent"
@@ -21,7 +21,7 @@
       />
 
   <View
-      android:layout_width="2px"
+      android:layout_width="1dp"
       android:layout_height="match_parent"
       android:layout_marginBottom="12dp"
       android:layout_marginTop="12dp"
@@ -42,25 +42,24 @@
       tools:text="图片"
       />
 
-  <Button
+  <androidx.appcompat.widget.AppCompatButton
       android:id="@+id/btn_ok"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_alignParentEnd="true"
       android:layout_centerVertical="true"
+      android:gravity="center"
       android:layout_marginLeft="8dp"
       android:layout_marginRight="8dp"
       android:background="@drawable/selector_top_ok"
       android:minHeight="30dp"
-      android:minWidth="48dp"
-      android:paddingLeft="16.0dp"
-      android:paddingRight="16.0dp"
+      android:minWidth="80dp"
       android:textColor="#ffffff"
       android:textSize="14sp"
       tools:text="完成(0/3)"
       />
 
-  <android.support.v7.widget.AppCompatImageView
+  <androidx.appcompat.widget.AppCompatImageView
       android:id="@+id/btn_del"
       android:layout_width="48dp"
       android:layout_height="match_parent"
