@@ -12,7 +12,7 @@ Android自定义相册，完全仿微信UI，实现了拍照、图片选择（�
 
 使用前，对于Android Studio的用户，可以选择添加:
 ```java
-	implementation 'com.mrtan.android:imagepicker:0.7.0'
+	implementation 'com.mrtan.android:imagepicker:0.7.1'
 ```
 
 ## 2.功能和参数含义
@@ -37,25 +37,31 @@ Android自定义相册，完全仿微信UI，实现了拍照、图片选择（�
 
 更多使用，请下载demo参看源代码
 
-1. 首先你需要继承 `com.lzy.imagepicker.loader.ImageLoader` 这个接口,实现其中的方法,比如以下代码是使用 `Picasso` 三方加载库实现的
+1. 首先你需要继承 `com.lzy.imagepicker.loader.ImageLoader` 这个接口,实现其中的方法,比如以下代码是使用 `Glide` 三方加载库实现的
 ```java
-public class PicassoImageLoader implements ImageLoader {
+public class GlideImageLoader implements ImageLoader {
 
     @Override
-    public void displayImage(Activity activity, String path, ImageView imageView, int width, int height) {
-        Picasso.with(activity)//
-                   .load(Uri.fromFile(new File(path)))//
-                .placeholder(R.mipmap.default_image)//
-                .error(R.mipmap.default_image)//
-                .resize(width, height)//
-                .centerInside()//
-                .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)//
+    public void displayImage(Activity activity, Uri uri, ImageView imageView, int width, int height) {
+
+        GlideApp.with(activity)                             //配置上下文
+                .load(uri)      //设置图片路径(fix #8,文件名包含%符号 无法识别和显示)
+                .error(R.drawable.ic_default_image)           //设置错误图片
+                .placeholder(R.drawable.ic_default_image)     //设置占位图片
+                .diskCacheStrategy(DiskCacheStrategy.ALL)//缓存全尺寸
+                .into(imageView);
+    }
+
+    @Override
+    public void displayImagePreview(Activity activity, Uri uri, ImageView imageView, int width, int height) {
+        GlideApp.with(activity)                             //配置上下文
+                .load(uri)      //设置图片路径(fix #8,文件名包含%符号 无法识别和显示)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)//缓存全尺寸
                 .into(imageView);
     }
 
     @Override
     public void clearMemoryCache() {
-        //这里是清除缓存的方法,根据需要自己实现
     }
 }
 ```
@@ -103,7 +109,7 @@ protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
     if (resultCode == ImagePicker.RESULT_CODE_ITEMS) {
         if (data != null && requestCode == IMAGE_PICKER) {
-            ArrayList<ImageItem> images = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker.EXTRA_RESULT_ITEMS);
+            ArrayList<ImageItem> images = data.getParcelableArrayListExtra(ImagePicker.EXTRA_IMAGE_ITEMS);
             MyAdapter adapter = new MyAdapter(images);
             gridView.setAdapter(adapter);
         } else {
@@ -114,6 +120,11 @@ protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 ```
 
 ## 更新日志
+
+V 0.7.1
+
+* 修复AndroidQ 拍照问题
+* 修复图片裁剪问题
 
 V 0.7.0
 
