@@ -105,7 +105,6 @@ public class ImageDataSource implements LoaderManager.LoaderCallbacks<Cursor> {
                 //封装实体
                 ImageItem imageItem = new ImageItem();
                 imageItem.name = imageName;
-                imageItem.path = imagePath;
                 imageItem.size = imageSize;
                 imageItem.width = imageWidth;
                 imageItem.height = imageHeight;

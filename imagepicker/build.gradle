@@ -2,5 +2,6 @@ dependencies {
     compileOnly deps.androidx.appCompat
     compileOnly deps.androidx.recyclerView
     api deps.PhotoView
+    implementation 'androidx.exifinterface:exifinterface:1.1.0-beta01'
 }
 apply from: '../bintray.gradle'

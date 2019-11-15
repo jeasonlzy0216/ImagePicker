@@ -4,7 +4,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.os.Build;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -58,7 +58,7 @@ public class ImageGridActivity extends ImageBaseActivity implements ImageDataSou
     private boolean isOrigin = false;  //是否选中原图
     private View mFooterBar;     //底部栏
     private Button mBtnOk;       //确定按钮
-    private View mllDir; //文件夹切换按钮
+//    private View mllDir; //文件夹切换按钮
     private TextView mtvDir; //显示当前文件夹
     private TextView mBtnPre;      //预览按钮
     private ImageFolderAdapter mImageFolderAdapter;    //图片文件夹的适配器
@@ -70,7 +70,7 @@ public class ImageGridActivity extends ImageBaseActivity implements ImageDataSou
     private ImageRecyclerAdapter mRecyclerAdapter;
 
     @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         directPhoto = savedInstanceState.getBoolean(EXTRAS_TAKE_PICKERS, false);
     }
@@ -101,21 +101,20 @@ public class ImageGridActivity extends ImageBaseActivity implements ImageDataSou
                     imagePicker.takePicture(this, ImagePicker.REQUEST_CODE_TAKE);
                 }
             }
-            ArrayList<ImageItem> images = (ArrayList<ImageItem>) data.getSerializableExtra(EXTRAS_IMAGES);
+            ArrayList<ImageItem> images = data.getParcelableArrayListExtra(EXTRAS_IMAGES);
             imagePicker.setSelectedImages(images);
         }
 
-        mRecyclerView = (RecyclerView) findViewById(R.id.recycler);
+        mRecyclerView = findViewById(R.id.recycler);
 
         findViewById(R.id.btn_back).setOnClickListener(this);
-        mBtnOk = (Button) findViewById(R.id.btn_ok);
+        mBtnOk = findViewById(R.id.btn_ok);
         mBtnOk.setOnClickListener(this);
-        mBtnPre = (TextView) findViewById(R.id.btn_preview);
+        mBtnPre = findViewById(R.id.btn_preview);
         mBtnPre.setOnClickListener(this);
         mFooterBar = findViewById(R.id.footer_bar);
-        mllDir = findViewById(R.id.ll_dir);
-        mllDir.setOnClickListener(this);
-        mtvDir = (TextView) findViewById(R.id.tv_dir);
+        findViewById(R.id.ll_dir).setOnClickListener(this);
+        mtvDir = findViewById(R.id.tv_dir);
         if (imagePicker.isMultiMode()) {
             mBtnOk.setVisibility(View.VISIBLE);
             mBtnPre.setVisibility(View.VISIBLE);
@@ -254,9 +253,8 @@ public class ImageGridActivity extends ImageBaseActivity implements ImageDataSou
             Intent intent = new Intent(ImageGridActivity.this, ImagePreviewActivity.class);
             intent.putExtra(ImagePicker.EXTRA_SELECTED_IMAGE_POSITION, position);
 
-            /**
+            /*
              * 2017-03-20
-             *
              * 依然采用弱引用进行解决，采用单例加锁方式处理
              */
 
@@ -304,7 +302,7 @@ public class ImageGridActivity extends ImageBaseActivity implements ImageDataSou
 //        mRecyclerAdapter.notifyItemChanged(position); // 17/4/21 fix the position while click img to preview
 //        mRecyclerAdapter.notifyItemChanged(position + (imagePicker.isShowCamera() ? 1 : 0));// 17/4/24  fix the position while click right bottom preview button
         for (int i = imagePicker.isShowCamera() ? 1 : 0; i < mRecyclerAdapter.getItemCount(); i++) {
-            if (mRecyclerAdapter.getItem(i).path != null && mRecyclerAdapter.getItem(i).path.equals(item.path)) {
+            if (mRecyclerAdapter.getItem(i).uri != null && mRecyclerAdapter.getItem(i).uri.equals(item.uri)) {
                 mRecyclerAdapter.notifyItemChanged(i);
                 return;
             }
@@ -320,9 +318,9 @@ public class ImageGridActivity extends ImageBaseActivity implements ImageDataSou
             } else {
                 //从拍照界面返回
                 //点击 X , 没有选择照片
-                if (!data.hasExtra(ImagePicker.EXTRA_RESULT_ITEMS)) {
+                if (data.hasExtra(ImagePicker.EXTRA_RESULT_ITEMS)) {
                     //什么都不做 直接调起相机
-                } else {
+//                } else {
                     //说明是从裁剪页面过来的数据，直接返回就可以
                     setResult(ImagePicker.RESULT_CODE_ITEMS, data);
                 }
@@ -332,30 +330,11 @@ public class ImageGridActivity extends ImageBaseActivity implements ImageDataSou
             //如果是裁剪，因为裁剪指定了存储的Uri，所以返回的data一定为null
             if (resultCode == RESULT_OK && requestCode == ImagePicker.REQUEST_CODE_TAKE) {
                 //发送广播通知图片增加了
-                ImagePicker.galleryAddPic(this, imagePicker.getTakeImageFile());
-
-                /**
-                 * 2017-03-21 对机型做旋转处理
-                 */
-                String path = imagePicker.getTakeImageFile().getAbsolutePath();
-//                int degree = BitmapUtil.getBitmapDegree(path);
-//                if (degree != 0){
-//                    Bitmap bitmap = BitmapUtil.rotateBitmapByDegree(path,degree);
-//                    if (bitmap != null){
-//                        File file = new File(path);
-//                        try {
-//                            FileOutputStream bos = new FileOutputStream(file);
-//                            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos);
-//                            bos.flush();
-//                            bos.close();
-//                        } catch (IOException e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                }
+                Uri takeImageUri = imagePicker.getTakeImageUri();
+                ImagePicker.galleryAddPic(this, takeImageUri);
 
                 ImageItem imageItem = new ImageItem();
-                imageItem.path = path;
+                imageItem.uri = takeImageUri;
                 imagePicker.clearSelectedImages();
                 imagePicker.addSelectedImageItem(0, imageItem, true);
                 if (imagePicker.isCrop()) {

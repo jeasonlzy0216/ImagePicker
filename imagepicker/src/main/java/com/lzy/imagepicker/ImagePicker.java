@@ -1,6 +1,8 @@
 package com.lzy.imagepicker;
 
 import android.app.Activity;
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -66,7 +68,7 @@ public class ImagePicker {
     private ImageLoader imageLoader;     //图片加载器
     private CropImageView.Style style = CropImageView.Style.RECTANGLE; //裁剪框的形状
     private File cropCacheFolder;
-    private File takeImageFile;
+    private Uri takeImageUri;
 
     private ArrayList<ImageItem> mSelectedImages = new ArrayList<>();   //选中的图片集合
     private List<ImageFolder> mImageFolders;      //所有的图片文件夹
@@ -161,8 +163,8 @@ public class ImagePicker {
         this.focusHeight = focusHeight;
     }
 
-    public File getTakeImageFile() {
-        return takeImageFile;
+    public Uri getTakeImageUri() {
+        return takeImageUri;
     }
 
     public File getCropCacheFolder(Context context) {
@@ -253,35 +255,49 @@ public class ImagePicker {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         takePictureIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         if (takePictureIntent.resolveActivity(activity.getPackageManager()) != null) {
-            if (Utils.existSDCard()) takeImageFile = new File(Environment.getExternalStorageDirectory(), "/DCIM/camera/");
-            else takeImageFile = Environment.getDataDirectory();
-            takeImageFile = createFile(takeImageFile);
+            File directory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
+            directory = new File(directory, "Camera");
+            File file = createFile(directory);
             // 默认情况下，即不需要指定intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
             // 照相机有自己默认的存储路径，拍摄的照片将返回一个缩略图。如果想访问原始图片，
             // 可以通过dat extra能够得到原始图片位置。即，如果指定了目标uri，data就没有数据，
             // 如果没有指定uri，则data就返回有数据！
 
-            Uri uri;
-            if (VERSION.SDK_INT <= VERSION_CODES.M) {
-                uri = Uri.fromFile(takeImageFile);
+            if (VERSION.SDK_INT == VERSION_CODES.Q) {
+                // 适配android 10
+                takeImageUri = createImageUri(activity.getContentResolver());
+            } else if (VERSION.SDK_INT <= VERSION_CODES.M) {
+                takeImageUri = Uri.fromFile(file);
             } else {
                 /*
                  * 7.0 调用系统相机拍照不再允许使用Uri方式，应该替换为FileProvider
                  * 并且这样可以解决MIUI系统上拍照返回size为0的情况
                  */
-                uri = FileProvider.getUriForFile(activity, ProviderUtil.getFileProviderName(activity), takeImageFile);
+                takeImageUri = FileProvider.getUriForFile(activity, ProviderUtil.getFileProviderName(activity), file);
                 //加入uri权限 要不三星手机不能拍照
                 List<ResolveInfo> resInfoList = activity.getPackageManager().queryIntentActivities(takePictureIntent, PackageManager.MATCH_DEFAULT_ONLY);
                 for (ResolveInfo resolveInfo : resInfoList) {
                     String packageName = resolveInfo.activityInfo.packageName;
-                    activity.grantUriPermission(packageName, uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                    activity.grantUriPermission(packageName, takeImageUri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
                 }
             }
 
-            Log.e("nanchen", ProviderUtil.getFileProviderName(activity));
-            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, takeImageUri);
         }
         activity.startActivityForResult(takePictureIntent, requestCode);
+    }
+
+    /**
+     * 创建图片地址uri,用于保存拍照后的照片 Android 10以后使用这种方法
+     */
+    private Uri createImageUri(ContentResolver resolver) {
+        String status = Environment.getExternalStorageState();
+        // 判断是否有SD卡,优先使用SD卡存储,当没有SD卡时使用手机存储
+        if (status.equals(Environment.MEDIA_MOUNTED)) {
+            return resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, new ContentValues());
+        } else {
+            return resolver.insert(MediaStore.Images.Media.INTERNAL_CONTENT_URI, new ContentValues());
+        }
     }
 
     /**
@@ -297,10 +313,9 @@ public class ImagePicker {
     /**
      * 扫描图片
      */
-    public static void galleryAddPic(Context context, File file) {
+    public static void galleryAddPic(Context context, Uri uri) {
         Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-        Uri contentUri = Uri.fromFile(file);
-        mediaScanIntent.setData(contentUri);
+        mediaScanIntent.setData(uri);
         context.sendBroadcast(mediaScanIntent);
     }
 
@@ -346,7 +361,7 @@ public class ImagePicker {
      */
     public void restoreInstanceState(Bundle savedInstanceState) {
         cropCacheFolder = (File) savedInstanceState.getSerializable("cropCacheFolder");
-        takeImageFile = (File) savedInstanceState.getSerializable("takeImageFile");
+        takeImageUri = (Uri) savedInstanceState.getParcelable("takeImageUri");
         imageLoader = (ImageLoader) savedInstanceState.getSerializable("imageLoader");
         style = (CropImageView.Style) savedInstanceState.getSerializable("style");
         multiMode = savedInstanceState.getBoolean("multiMode");
@@ -365,7 +380,7 @@ public class ImagePicker {
      */
     public void saveInstanceState(Bundle outState) {
         outState.putSerializable("cropCacheFolder", cropCacheFolder);
-        outState.putSerializable("takeImageFile", takeImageFile);
+        outState.putParcelable("takeImageUri", takeImageUri);
         outState.putSerializable("imageLoader", imageLoader);
         outState.putSerializable("style", style);
         outState.putBoolean("multiMode", multiMode);
