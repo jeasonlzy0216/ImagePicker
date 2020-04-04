@@ -69,9 +69,9 @@ public class BitmapUtil {
         matrix.postRotate(degree);
         // 将原始图片按照旋转矩阵进行旋转，并得到新的图片
         Bitmap newBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
-        if (!bitmap.isRecycled()) {
-            bitmap.recycle();
-        }
+       // if (!bitmap.isRecycled()) {
+       //     bitmap.recycle();
+       // }
         return newBitmap;
     }
 
