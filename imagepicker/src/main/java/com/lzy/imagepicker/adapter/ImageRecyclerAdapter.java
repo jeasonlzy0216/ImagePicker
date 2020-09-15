@@ -76,7 +76,7 @@ public class ImageRecyclerAdapter extends ListAdapter<ImageItem, ViewHolder> {
 
         mImageSize = Utils.getImageItemWidth(mActivity);
         imagePicker = ImagePicker.getInstance();
-        isShowCamera = imagePicker.isShowCamera() && Utils.canTakePicture(activity);
+        isShowCamera = imagePicker.isShowCamera();
         mSelectedImages = imagePicker.getSelectedImages();
         mInflater = LayoutInflater.from(activity);
     }

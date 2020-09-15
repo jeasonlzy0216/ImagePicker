@@ -88,6 +88,9 @@ public class ImageGridActivity extends ImageBaseActivity implements ImageDataSou
 
         imagePicker = ImagePicker.getInstance();
         imagePicker.clear();
+        if (imagePicker.isShowCamera() && !Utils.canTakePicture(this)){
+            imagePicker.setShowCamera(false);
+        }
         imagePicker.addOnImageSelectedListener(this);
 
         Intent data = getIntent();
