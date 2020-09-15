@@ -305,16 +305,6 @@
         android:layout_height="match_parent"
         />
 
-    <com.lzy.widget.ExpandGridView
-        android:id="@+id/gridview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#000"
-        android:horizontalSpacing="4dp"
-        android:numColumns="3"
-        android:verticalSpacing="4dp"
-        />
-
     <Button
         android:id="@+id/btn_wxDemo"
         android:layout_width="match_parent"

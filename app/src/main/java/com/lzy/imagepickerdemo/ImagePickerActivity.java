@@ -13,7 +13,6 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.SeekBar;
@@ -54,7 +53,6 @@ public class ImagePickerActivity extends AppCompatActivity
     private RadioButton rb_crop_square;
     private RadioButton rb_crop_circle;
     private TextView tv_select_limit;
-    private GridView gridView;
     private EditText et_crop_width;
     private EditText et_crop_height;
     private EditText et_crop_radius;
@@ -115,7 +113,6 @@ public class ImagePickerActivity extends AppCompatActivity
         Button btn_wxDemo = (Button) findViewById(R.id.btn_wxDemo);
         btn_wxDemo.setOnClickListener(this);
 
-        gridView = (GridView) findViewById(R.id.gridview);
     }
 
     @Override
@@ -200,58 +197,10 @@ public class ImagePickerActivity extends AppCompatActivity
         if (resultCode == ImagePicker.RESULT_CODE_ITEMS) {
             if (data != null && requestCode == 100) {
                 images = data.getParcelableArrayListExtra(ImagePicker.EXTRA_RESULT_ITEMS);
-                MyAdapter adapter = new MyAdapter(images);
-                gridView.setAdapter(adapter);
             } else {
                 Toast.makeText(this, "没有数据", Toast.LENGTH_SHORT).show();
             }
         }
     }
 
-
-
-    private class MyAdapter extends BaseAdapter {
-
-        private List<ImageItem> items;
-
-        public MyAdapter(List<ImageItem> items) {
-            this.items = items;
-        }
-
-        public void setData(List<ImageItem> items) {
-            this.items = items;
-            notifyDataSetChanged();
-        }
-
-        @Override
-        public int getCount() {
-            return items.size();
-        }
-
-        @Override
-        public ImageItem getItem(int position) {
-            return items.get(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            ImageView imageView;
-            int size = gridView.getWidth() / 3;
-            if (convertView == null) {
-                imageView = new ImageView(ImagePickerActivity.this);
-                AbsListView.LayoutParams params = new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, size);
-                imageView.setLayoutParams(params);
-                imageView.setBackgroundColor(Color.parseColor("#88888888"));
-            } else {
-                imageView = (ImageView) convertView;
-            }
-            imagePicker.getImageLoader().displayImage(ImagePickerActivity.this, getItem(position).uri, imageView, size, size);
-            return imageView;
-        }
-    }
 }

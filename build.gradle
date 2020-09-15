@@ -1,15 +1,15 @@
 buildscript {
-  apply from: "version.gradle"
-  addRepos(repositories)
-  dependencies {
-    classpath deps.android_gradle_plugin
-    classpath deps.gradle_bintray_plugin
-    classpath deps.android_maven_gradle_plugin
-  }
+    apply from: "version.gradle"
+    addRepos(repositories)
+    dependencies {
+        classpath deps.plugin.androidGradle
+        classpath deps.plugin.gradleBinary
+        classpath deps.plugin.androidMaven
+    }
 }
 
 allprojects {
-  addRepos(repositories)
+    addRepos(repositories)
 }
 
 subprojects {
@@ -34,5 +34,5 @@ subprojects {
     }
 }
 task clean(type: Delete) {
-  delete rootProject.buildDir
+    delete rootProject.buildDir
 }

@@ -13,14 +13,13 @@ import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.util.Log;
 
 import androidx.core.content.FileProvider;
+
 import com.lzy.imagepicker.bean.ImageFolder;
 import com.lzy.imagepicker.bean.ImageItem;
 import com.lzy.imagepicker.loader.ImageLoader;
 import com.lzy.imagepicker.util.ProviderUtil;
-import com.lzy.imagepicker.util.Utils;
 import com.lzy.imagepicker.view.CropImageView;
 
 import java.io.File;
@@ -283,8 +282,8 @@ public class ImagePicker {
             }
 
             takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, takeImageUri);
+            activity.startActivityForResult(takePictureIntent, requestCode);
         }
-        activity.startActivityForResult(takePictureIntent, requestCode);
     }
 
     /**

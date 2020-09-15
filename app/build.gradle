@@ -20,8 +20,5 @@ dependencies {
     implementation deps.androidx.annotations
     implementation deps.androidx.recyclerView
     implementation deps.glide.runtime
-    implementation (deps.view_core,{
-        exclude group: 'com.android.support'
-    })
     implementation project(':imagepicker')
 }

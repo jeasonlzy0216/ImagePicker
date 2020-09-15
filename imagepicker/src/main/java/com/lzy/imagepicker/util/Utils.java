@@ -2,8 +2,10 @@ package com.lzy.imagepicker.util;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.Display;
@@ -98,5 +100,11 @@ public class Utils {
     public static int getNavigationBarHeight(Context context) {
         int resourceId = context.getResources().getIdentifier("navigation_bar_height", "dimen", "android");
         return resourceId > 0 ? context.getResources().getDimensionPixelSize(resourceId) : 0;
+    }
+
+
+    public static boolean canTakePicture(Activity activity){
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        return takePictureIntent.resolveActivity(activity.getPackageManager()) != null;
     }
 }

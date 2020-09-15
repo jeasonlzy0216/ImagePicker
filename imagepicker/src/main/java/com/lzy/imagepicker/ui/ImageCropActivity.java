@@ -72,11 +72,19 @@ public class ImageCropActivity extends ImageBaseActivity implements View.OnClick
         DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
         options.inSampleSize = calculateInSampleSize(options, displayMetrics.widthPixels, displayMetrics.heightPixels);
         options.inJustDecodeBounds = false;
-        mBitmap = BitmapUtil.getBitmapFromUri(this, imageItem.uri, null , options);
+        if (imageItem.uri != null) {
+            mBitmap = BitmapUtil.getBitmapFromUri(this, imageItem.uri, null, options);
 //        mCropImageView.setImageBitmap(mBitmap);
-        //设置默认旋转角度
-        mCropImageView.setImageBitmap(mCropImageView.rotate(mBitmap, BitmapUtil.getBitmapDegree(getContentResolver(), imageItem.uri)));
-
+            //设置默认旋转角度
+            mCropImageView.setImageBitmap(mCropImageView.rotate(mBitmap, BitmapUtil.getBitmapDegree(getContentResolver(), imageItem.uri)));
+        } else  {
+            mBitmap = (Bitmap) getIntent().getExtras().get("data");
+            if (mBitmap != null){
+                mCropImageView.setImageBitmap(mBitmap);
+            } else {
+                finish();
+            }
+        }
 //        mCropImageView.setImageURI(Uri.fromFile(new File(imagePath)));
     }
 
