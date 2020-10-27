@@ -12,12 +12,14 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SimpleItemAnimator;
+
 import com.lzy.imagepicker.DataHolder;
 import com.lzy.imagepicker.ImageDataSource;
 import com.lzy.imagepicker.ImagePicker;
@@ -30,6 +32,7 @@ import com.lzy.imagepicker.bean.ImageItem;
 import com.lzy.imagepicker.util.Utils;
 import com.lzy.imagepicker.view.FolderPopUpWindow;
 import com.lzy.imagepicker.view.GridSpacingItemDecoration;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,8 +46,8 @@ import java.util.List;
  * 2017-03-17
  *
  * @author nanchen
- *         新增可直接传递是否裁剪参数，以及直接拍照
- *         ================================================
+ * 新增可直接传递是否裁剪参数，以及直接拍照
+ * ================================================
  */
 public class ImageGridActivity extends ImageBaseActivity implements ImageDataSource.OnImagesLoadedListener, OnImageItemClickListener, ImagePicker.OnImageSelectedListener, View.OnClickListener {
 
@@ -58,7 +61,7 @@ public class ImageGridActivity extends ImageBaseActivity implements ImageDataSou
     private boolean isOrigin = false;  //是否选中原图
     private View mFooterBar;     //底部栏
     private Button mBtnOk;       //确定按钮
-//    private View mllDir; //文件夹切换按钮
+    //    private View mllDir; //文件夹切换按钮
     private TextView mtvDir; //显示当前文件夹
     private TextView mBtnPre;      //预览按钮
     private ImageFolderAdapter mImageFolderAdapter;    //图片文件夹的适配器
@@ -88,7 +91,7 @@ public class ImageGridActivity extends ImageBaseActivity implements ImageDataSou
 
         imagePicker = ImagePicker.getInstance();
         imagePicker.clear();
-        if (imagePicker.isShowCamera() && !Utils.canTakePicture(this)){
+        if (imagePicker.isShowCamera() && !Utils.canTakePicture(this)) {
             imagePicker.setShowCamera(false);
         }
         imagePicker.addOnImageSelectedListener(this);
@@ -242,7 +245,7 @@ public class ImageGridActivity extends ImageBaseActivity implements ImageDataSou
 //        mImageGridAdapter.setOnImageItemClickListener(this);
         mRecyclerAdapter.setOnImageItemClickListener(this);
         mRecyclerView.setLayoutManager(new GridLayoutManager(this, 3));
-        ((SimpleItemAnimator)mRecyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
+        ((SimpleItemAnimator) mRecyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
         mRecyclerView.addItemDecoration(new GridSpacingItemDecoration(3, Utils.dp2px(this, 2), false));
         mRecyclerView.setAdapter(mRecyclerAdapter);
         mImageFolderAdapter.refreshData(imageFolders);
@@ -320,16 +323,14 @@ public class ImageGridActivity extends ImageBaseActivity implements ImageDataSou
             //发送广播通知图片增加了
             Uri takeImageUri = imagePicker.getTakeImageUri();
             ImagePicker.galleryAddPic(this, takeImageUri);
-
             ImageItem imageItem = new ImageItem();
             imageItem.uri = takeImageUri;
             imagePicker.clearSelectedImages();
             imagePicker.addSelectedImageItem(0, imageItem, true);
             if (imagePicker.isCrop()) {
                 Intent intent = new Intent(ImageGridActivity.this, ImageCropActivity.class);
-                Bundle ext = data.getExtras();
-                if (ext != null) {
-                    intent.putExtras(ext);
+                if (data != null && data.getExtras() != null) {
+                    intent.putExtras(data.getExtras());
                 }
                 startActivityForResult(intent, ImagePicker.REQUEST_CODE_CROP);  //单选需要裁剪，进入裁剪界面
             } else {

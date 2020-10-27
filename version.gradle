@@ -1,6 +1,6 @@
 ext.deps = [:]
 def versions = [:]
-versions.android_gradle_plugin = "4.0.1"
+versions.android_gradle_plugin = "4.1.0"
 versions.kotlin = "1.4.10"
 versions.kotlinCoroutines = "1.3.9"
 versions.kotlinSerialization = '1.0.0-RC'
