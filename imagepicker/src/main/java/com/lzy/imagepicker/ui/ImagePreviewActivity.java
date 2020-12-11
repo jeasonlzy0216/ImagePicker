@@ -3,7 +3,6 @@ package com.lzy.imagepicker.ui;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.view.ViewPager;
 import android.text.format.Formatter;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +10,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Toast;
-
+import androidx.viewpager.widget.ViewPager;
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.R;
 import com.lzy.imagepicker.bean.ImageItem;
@@ -45,15 +44,15 @@ public class ImagePreviewActivity extends ImagePreviewBaseActivity implements Im
 
         isOrigin = getIntent().getBooleanExtra(ImagePreviewActivity.ISORIGIN, false);
         imagePicker.addOnImageSelectedListener(this);
-        mBtnOk = (Button) findViewById(R.id.btn_ok);
+        mBtnOk = findViewById(R.id.btn_ok);
         mBtnOk.setVisibility(View.VISIBLE);
         mBtnOk.setOnClickListener(this);
 
         bottomBar = findViewById(R.id.bottom_bar);
         bottomBar.setVisibility(View.VISIBLE);
 
-        mCbCheck = (SuperCheckBox) findViewById(R.id.cb_check);
-        mCbOrigin = (SuperCheckBox) findViewById(R.id.cb_origin);
+        mCbCheck = findViewById(R.id.cb_check);
+        mCbOrigin = findViewById(R.id.cb_origin);
         marginView = findViewById(R.id.margin_bottom);
         mCbOrigin.setText(getString(R.string.ip_origin));
         mCbOrigin.setOnCheckedChangeListener(this);
@@ -155,7 +154,7 @@ public class ImagePreviewActivity extends ImagePreviewBaseActivity implements Im
                 imagePicker.addSelectedImageItem(mCurrentPosition, imageItem, mCbCheck.isChecked());
             }
             Intent intent = new Intent();
-            intent.putExtra(ImagePicker.EXTRA_RESULT_ITEMS, imagePicker.getSelectedImages());
+            intent.putParcelableArrayListExtra(ImagePicker.EXTRA_RESULT_ITEMS, imagePicker.getSelectedImages());
             setResult(ImagePicker.RESULT_CODE_ITEMS, intent);
             finish();
 

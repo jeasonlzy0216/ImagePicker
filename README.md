@@ -1,7 +1,6 @@
 # ImagePicker
 Android自定义相册，完全仿微信UI，实现了拍照、图片选择（单选/多选）、 裁剪 、旋转、等功能。
 
-### 由于个人时间有限，该项目停止维护
 如果你发现有bug，或者好的建议，可以提merge request，我测试通过后会立即合并并发布新版本，确保该库处于可用的状态。
 
 该项目参考了：
@@ -9,22 +8,11 @@ Android自定义相册，完全仿微信UI，实现了拍照、图片选择（�
 * [https://github.com/pengjianbo/GalleryFinal](https://github.com/pengjianbo/GalleryFinal) 
 * [https://github.com/easonline/AndroidImagePicker](https://github.com/easonline/AndroidImagePicker)
 
-喜欢原作的可以去使用。同时欢迎大家下载体验本项目，如果使用过程中遇到什么问题，欢迎反馈。
-
-## 联系方式
- * email： liaojeason@126.com
- * QQ群： 489873144 <a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=ba5dbb5115a165866ec77d96cb46685d1ad159ab765b796699d6763011ffe151"><img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="Android 格调小窝" title="Android 格调小窝"></a>（点击图标，可以直接加入，建议使用QQ群，邮箱使用较少，可能看的不及时）
- * 如果遇到问题欢迎在群里提问，个人能力也有限，希望一起学习一起进步。
- 
-## 演示
- ![image](https://github.com/jeasonlzy/Screenshots/blob/master/ImagePicker/demo1.png)![image](https://github.com/jeasonlzy/Screenshots/blob/master/ImagePicker/demo2.gif)
- ![image](https://github.com/jeasonlzy/Screenshots/blob/master/ImagePicker/demo3.gif)![image](https://github.com/jeasonlzy/Screenshots/blob/master/ImagePicker/demo5.gif)
-
 ## 1.用法
 
 使用前，对于Android Studio的用户，可以选择添加:
 ```java
-	compile 'com.lzy.widget:imagepicker:0.6.1'  //指定版本
+	implementation 'com.mrtan.android:imagepicker:0.7.2'
 ```
 
 ## 2.功能和参数含义
@@ -49,25 +37,31 @@ Android自定义相册，完全仿微信UI，实现了拍照、图片选择（�
 
 更多使用，请下载demo参看源代码
 
-1. 首先你需要继承 `com.lzy.imagepicker.loader.ImageLoader` 这个接口,实现其中的方法,比如以下代码是使用 `Picasso` 三方加载库实现的
+1. 首先你需要继承 `com.lzy.imagepicker.loader.ImageLoader` 这个接口,实现其中的方法,比如以下代码是使用 `Glide` 三方加载库实现的
 ```java
-public class PicassoImageLoader implements ImageLoader {
+public class GlideImageLoader implements ImageLoader {
 
     @Override
-    public void displayImage(Activity activity, String path, ImageView imageView, int width, int height) {
-        Picasso.with(activity)//
-                   .load(Uri.fromFile(new File(path)))//
-                .placeholder(R.mipmap.default_image)//
-                .error(R.mipmap.default_image)//
-                .resize(width, height)//
-                .centerInside()//
-                .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)//
+    public void displayImage(Activity activity, Uri uri, ImageView imageView, int width, int height) {
+
+        GlideApp.with(activity)                             //配置上下文
+                .load(uri)      //设置图片路径(fix #8,文件名包含%符号 无法识别和显示)
+                .error(R.drawable.ic_default_image)           //设置错误图片
+                .placeholder(R.drawable.ic_default_image)     //设置占位图片
+                .diskCacheStrategy(DiskCacheStrategy.ALL)//缓存全尺寸
+                .into(imageView);
+    }
+
+    @Override
+    public void displayImagePreview(Activity activity, Uri uri, ImageView imageView, int width, int height) {
+        GlideApp.with(activity)                             //配置上下文
+                .load(uri)      //设置图片路径(fix #8,文件名包含%符号 无法识别和显示)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)//缓存全尺寸
                 .into(imageView);
     }
 
     @Override
     public void clearMemoryCache() {
-        //这里是清除缓存的方法,根据需要自己实现
     }
 }
 ```
@@ -115,7 +109,7 @@ protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
     if (resultCode == ImagePicker.RESULT_CODE_ITEMS) {
         if (data != null && requestCode == IMAGE_PICKER) {
-            ArrayList<ImageItem> images = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker.EXTRA_RESULT_ITEMS);
+            ArrayList<ImageItem> images = data.getParcelableArrayListExtra(ImagePicker.EXTRA_IMAGE_ITEMS);
             MyAdapter adapter = new MyAdapter(images);
             gridView.setAdapter(adapter);
         } else {
@@ -127,7 +121,18 @@ protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
 ## 更新日志
 
+V 0.7.1
+
+* 修复AndroidQ 拍照问题
+* 修复图片裁剪问题
+
+V 0.7.0
+
+* 适配 AndroidX
+* 适配 AndroidQ
+
 V 0.6.1
+
  * [合并] [优化图片选择页UI， 适配预览页的横竖屏切换 #195](https://github.com/jeasonlzy/ImagePicker/pull/195)
 
 V 0.6.0
@@ -150,13 +155,13 @@ V 0.5.1
  * [更正] 由于原图功能其实还没有做，所以本版本隐去了原图的显示。以免用户误解原图问题。
  * [修复] 使用RecyclerView替换GridView解决改变选中状态全局刷新的问题；
  * [提示] 虽然本次解决了全局刷新，但是如果使用的是Picasso依然会出现重新加载一张图片的问题，这是Picasso自己的问题，建议使用Glide框架。
- 
+
 V 0.5.0
  * [修复] 解决provider冲突问题； 
 
 V 0.4.8
  * [修复] 解决demo中直接呼起相机并裁剪不会返回数据的bug，不需要这个功能的可以不更新;
- 
+
 V 0.4.7
  * [新增] 新增可直接调起相机的功能;
  * [修复] 解决可能和主项目provider冲突的潜在问题；
@@ -164,7 +169,7 @@ V 0.4.7
  * [修复] 使用Intent传值限制导致的崩溃问题;
  * [修复] 部分机型拍照后图片旋转问题；
  * [修复] 更改选择框图片背景为灰色，以免白色图看不清。
- 
+
 V 0.3.5
  * [新增] 提供直接调起相机的方式，并可直接设置牌照是否裁剪；
  * [修复] Android7.0设备调系统相机直接崩溃的问题；
@@ -172,7 +177,7 @@ V 0.3.5
 
 ## Licenses
 ```
- Copyright 2016 jeasonlzy(廖子尧)
+ Copyright 2019 freemrtan(谈晓龙)
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.

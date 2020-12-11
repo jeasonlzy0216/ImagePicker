@@ -1,9 +1,9 @@
 package com.lzy.imagepicker.view;
 
 import android.content.Context;
-import android.support.v7.widget.AppCompatCheckBox;
 import android.util.AttributeSet;
 import android.view.SoundEffectConstants;
+import androidx.appcompat.widget.AppCompatCheckBox;
 
 /**
  * ================================================

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="ip_all_images">Todas las imágenes</string>
+  <string name="ip_folder_image_count">Total%1$d</string>
+  <string name="ip_select_limit">Máximo%1$d</string>
+  <string name="ip_complete">Hecho</string>
+  <string name="ip_select_complete">Hecho(%1$d/%2$d)</string>
+  <string name="ip_preview">Avance</string>
+  <string name="ip_preview_count">Avance(%1$d)</string>
+  <string name="ip_photo_crop">Acortar</string>
+  <string name="ip_origin">Original</string>
+  <string name="ip_origin_size">Original(%1$s)</string>
+  <string name="ip_take_picture">Tomar la foto</string>
+  <string name="ip_no_local_file_permission">No tienes permiso para seleccionar imágenes locales.</string>
+  <string name="ip_no_camera_permission">No tienes permiso para usar la cámara.</string>
+  <string name="ip_hint">Insinuación</string>
+  <string name="ip_cancel">Cancelar</string>
+  <string name="ip_sure">Por supuesto</string>
+  <string name="ip_delete_picture_ask">¿Estás seguro de que quieres borrar la imagen?</string>
+</resources>

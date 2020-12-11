@@ -7,6 +7,7 @@ import android.graphics.BitmapShader;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.PaintFlagsDrawFilter;
 import android.graphics.Path;
 import android.graphics.PointF;
 import android.graphics.RectF;
@@ -18,12 +19,12 @@ import android.net.Uri;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.support.v4.view.ViewCompat;
-import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.MotionEvent;
 
+import androidx.appcompat.widget.AppCompatImageView;
+import androidx.core.view.ViewCompat;
 import com.lzy.imagepicker.R;
 
 import java.io.File;
@@ -510,6 +511,8 @@ public class CropImageView extends AppCompatImageView {
                     int radius = length / 2;
                     Bitmap circleBitmap = Bitmap.createBitmap(length, length, Bitmap.Config.ARGB_8888);
                     Canvas canvas = new Canvas(circleBitmap);
+                    canvas.setDrawFilter(new PaintFlagsDrawFilter(0,
+                        Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG));
                     BitmapShader bitmapShader = new BitmapShader(bitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
                     Paint paint = new Paint();
                     paint.setShader(bitmapShader);

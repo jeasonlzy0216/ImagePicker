@@ -3,14 +3,16 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="5dp">
+    android:padding="5dp"
+    >
 
 
-    <ImageView
-        android:id="@+id/iv_img"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/selector_image_add" />
+  <ImageView
+      android:id="@+id/iv_img"
+      android:layout_width="70dp"
+      android:layout_height="70dp"
+      android:scaleType="centerCrop"
+      android:src="@drawable/selector_image_add"
+      />
 
 </LinearLayout>

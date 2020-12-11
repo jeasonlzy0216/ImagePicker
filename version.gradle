@@ -1,0 +1,319 @@
+ext.deps = [:]
+def versions = [:]
+versions.android_gradle_plugin = "4.1.0"
+versions.kotlin = "1.4.10"
+versions.kotlinCoroutines = "1.3.9"
+versions.kotlinSerialization = '1.0.0-RC'
+versions.kotlinTest = "3.4.2"
+versions.grgit = "2.3.0"
+versions.libs_version = "0.28.0"
+versions.lifecycle = "2.2.0"
+versions.arch = "1.1.1"
+versions.room = "2.2.1"
+versions.support = "27.1.1"
+versions.dagger = "2.23.2"
+versions.junit = "4.12"
+versions.espresso = "3.0.2"
+versions.robolectric = "4.3"
+versions.retrofit = "2.9.0"
+versions.retrofitCoroutinesAdapter = "0.9.2"
+versions.retrofitKotlinSerializationConverter = "0.5.0"
+versions.okhttp3 = "4.8.1"
+versions.mockwebserver = "3.8.1"
+versions.apache_commons = "2.5"
+versions.mockito = "3.0.0"
+versions.mockito_all = "2.7.19"
+versions.dexmaker = "2.2.0"
+versions.contraint_layout = "2.0.0-beta4"
+versions.glide = "4.10.0"
+versions.timber = "4.7.1"
+versions.atsl_runner = "1.2.0-alpha03"
+versions.atsl_rules = "1.1.1"
+versions.hamcrest = "1.3"
+versions.paging = "2.0.0"
+versions.immutables = "2.7.5"
+versions.gson = "2.8.5"
+versions.leackCanary = "1.6.2"
+versions.javaxInject = "1"
+versions.arrow = "1.0.0"
+versions.stetho = "1.5.0"
+versions.bugly = "3.2.3"
+versions.loadingButtom = '1.9'
+versions.flexibledivider = '1.4.0'
+versions.superCalendar = 'v1.4'
+versions.mp_android_chart = 'v3.1.0'
+versions.compressor = "2.1.0"
+versions.photopicker = "0.9.12@aar"
+versions.materialDialogs = "3.1.1"
+versions.bintray = "0.8.0"
+versions.lombok = "1.16.18"
+versions.gradle_lombok = "1.11"
+versions.ktx = "0.3"
+versions.navigation = "2.3.0-alpha01"
+versions.anko = "0.10.8"
+versions.flexbox = "1.1.0"
+versions.recyclerviewdsl = "1.1.0"
+versions.androidUtils = '1.29.0'
+versions.firebaseMessage = '19.0.0'
+versions.firebaseId = '19.0.0'
+versions.pandora = '2.1.0'
+versions.androidx = '1.0.0'
+versions.androidx_annotation = '1.1.0'
+versions.androidx_appcompat = '1.1.0-rc01'
+versions.androidx_espresso = '3.2.0-alpha03'
+versions.androidx_localbroadcast = '1.1.0-alpha01'
+versions.androidx_material = '1.1.0'
+versions.androidx_swiperefreshlayout = '1.1.0-alpha03'
+versions.androidx_recyclerView = '1.2.0-alpha01'
+versions.androidx_fragmentKtx = '1.2.0'
+versions.commonsCode = '1.12'
+versions.circleImageView = "3.0.0"
+versions.pinentryedittext = '2.0.6'
+versions.cloudinary = '1.26.0'
+versions.gradleBintrayPlugin = '1.8.4'
+versions.androidMavenGradlePlugin = '2.0'
+versions.permission = '2.0.1'
+versions.google_service = '4.2.0'
+versions.cipher = 'dev-SNAPSHOT'
+versions.rust = '0.8.3'
+versions.imagepicker = '1.2.1.Q'
+versions.location = '0.0.4'
+versions.work = '2.3.0-alpha01'
+versions.PhotoView = '2.3.0'
+
+def deps = [:]
+
+def androidx = [
+        "annotations"       : "androidx.annotation:annotation:$versions.androidx_annotation",
+        "appCompat"         : "androidx.appcompat:appcompat:$versions.androidx_appcompat",
+        "browser"           : "androidx.browser:browser:$versions.androidx",
+        "constraintLayout"  : "androidx.constraintlayout:constraintlayout:$versions.contraint_layout",
+        "core"              : "androidx.core:core-ktx:$versions.androidx",
+        "recyclerView"      : "androidx.recyclerview:recyclerview:$versions.androidx_recyclerView",
+        "swiperefreshlayout": "androidx.swiperefreshlayout:swiperefreshlayout:$versions.androidx_swiperefreshlayout",
+        "sqliteFramework"   : "androidx.sqlite:sqlite-framework:$versions.androidx",
+        'material'          : "com.google.android.material:material:$versions.androidx_material",
+        'localbroadcast'    : "androidx.localbroadcastmanager:localbroadcastmanager:$versions.androidx_localbroadcast",
+        "test"              : [
+                "runner"  : "androidx.test:runner:$versions.atsl_runner",
+                "rules"   : "androidx.test:rules:$versions.atsl_rules",
+                "espresso": "androidx.test.espresso:espresso-core:$versions.androidx_espresso",
+        ],
+        "fragmentKtx"       : "androidx.fragment:fragment-ktx:$versions.androidx_fragmentKtx",
+]
+deps.androidx = androidx
+
+def room = [
+        "runtime" : "androidx.room:room-runtime:$versions.room",
+        "compiler": "androidx.room:room-compiler:$versions.room",
+//        "rxjava2" : "androidx.room:room-rxjava2:$versions.room",
+        "testing" : "androidx.room:room-testing:$versions.room",
+]
+deps.room = room
+
+def lifecycle = [
+        "runtime"   : "androidx.lifecycle:lifecycle-runtime:$versions.lifecycle",
+        "extensions": "androidx.lifecycle:lifecycle-extensions:$versions.lifecycle",
+        "viewmodel" : "androidx.lifecycle:lifecycle-viewmodel:$versions.lifecycle",
+        "livedata"  : "androidx.lifecycle:lifecycle-livedata:$versions.lifecycle",
+        "java8"     : "androidx.lifecycle:lifecycle-common-java8:$versions.lifecycle",
+        "compiler"  : "androidx.lifecycle:lifecycle-compiler:$versions.lifecycle"
+]
+deps.lifecycle = lifecycle
+
+def work = [
+        "runtime"    : "androidx.work:work-runtime:$versions.work",
+        "runtime_ktx": "androidx.work:work-runtime-ktx:$versions.work"
+]
+deps.work = work
+
+def arch_core = [:]
+arch_core.testing = "android.arch.core:core-testing:$versions.arch"
+deps.arch_core = arch_core
+
+//apply plugin: "androidx.navigation.safeargs"
+def navigation = [
+        "ui"         : "androidx.navigation:navigation-ui:$versions.navigation",
+        "uiKtx"      : "androidx.navigation:navigation-ui-ktx:$versions.navigation",
+        "fragment"   : "androidx.navigation:navigation-fragment:$versions.navigation",
+        "fragmentKtx": "androidx.navigation:navigation-fragment-ktx:$versions.navigation",
+]
+deps.navigation = navigation
+
+def retrofit = [
+        "runtime"            : "com.squareup.retrofit2:retrofit:$versions.retrofit",
+        "gson"               : "com.squareup.retrofit2:converter-gson:$versions.retrofit",
+//        "rxjava2"            : "com.squareup.retrofit2:adapter-rxjava2:$versions.retrofit",
+        "koltinSerialization": "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:$versions.retrofitKotlinSerializationConverter",
+//        "coroutinesAdapter"  : "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:$versions.retrofitCoroutinesAdapter"
+]
+deps.retrofit = retrofit
+
+def okhttp3 = [
+        "runtime": "com.squareup.okhttp3:okhttp:$versions.okhttp3",
+        "logging": "com.squareup.okhttp3:logging-interceptor:$versions.okhttp3",
+        "stetho" : "com.facebook.stetho:stetho-okhttp3:$versions.stetho"
+]
+deps.okhttp3 = okhttp3
+
+def dagger = [
+        "runtime"                 : "com.google.dagger:dagger:$versions.dagger",
+        "android"                 : "com.google.dagger:dagger-android:$versions.dagger",
+        "android_support"         : "com.google.dagger:dagger-android-support:$versions.dagger",
+        "compiler"                : "com.google.dagger:dagger-compiler:$versions.dagger",
+        "android_support_compiler": "com.google.dagger:dagger-android-processor:$versions.dagger"
+]
+deps.dagger = dagger
+
+
+// https://github.com/Kotlin/anko
+def anko = [
+        "commons"   : "org.jetbrains.anko:anko-commons:$versions.anko",
+        "sdk25"     : "org.jetbrains.anko:anko-sdk25:$versions.anko",
+        "v7"        : "org.jetbrains.anko:anko-appcompat-v7:$versions.anko",
+        "sqlite"    : "org.jetbrains.anko:anko-sqlite:$versions.anko",
+        "coroutines": "org.jetbrains.anko:anko-coroutines:$versions.anko"
+]
+deps.anko = anko
+
+def espresso = [
+        "core"   : "com.android.support.test.espresso:espresso-core:$versions.espresso",
+        "contrib": "com.android.support.test.espresso:espresso-contrib:$versions.espresso",
+        "intents": "com.android.support.test.espresso:espresso-intents:$versions.espresso"
+]
+deps.espresso = espresso
+
+def mockito = [
+        "core": "org.mockito:mockito-core:$versions.mockito",
+        "all" : "org.mockito:mockito-all:$versions.mockito_all"
+]
+deps.mockito = mockito
+
+def kotlin = [
+        'stdlib'       : [
+                'common': "org.jetbrains.kotlin:kotlin-stdlib-common:${versions.kotlin}",
+                'jdk'   : "org.jetbrains.kotlin:kotlin-stdlib:${versions.kotlin}",
+                'js'    : "org.jetbrains.kotlin:kotlin-stdlib-js:${versions.kotlin}",
+        ],
+        'test'         : [
+                'common'     : "org.jetbrains.kotlin:kotlin-test-common:${versions.kotlin}",
+                'annotations': "org.jetbrains.kotlin:kotlin-test-annotations-common:${versions.kotlin}",
+                'jdk'        : "org.jetbrains.kotlin:kotlin-test-junit:${versions.kotlin}",
+                'js'         : "org.jetbrains.kotlin:kotlin-test-js:${versions.kotlin}",
+                'junit5'     : "io.kotlintest:kotlintest-runner-junit5:$versions.kotlinTest",
+        ],
+        'coroutines'   : [
+                'core'   : "org.jetbrains.kotlinx:kotlinx-coroutines-core:${versions.kotlinCoroutines}",
+                'android': "org.jetbrains.kotlinx:kotlinx-coroutines-android:${versions.kotlinCoroutines}",
+        ],
+        'serialization': [
+                'core': "org.jetbrains.kotlinx:kotlinx-serialization-core:${versions.kotlinSerialization}",
+        ],
+]
+deps.kotlin = kotlin
+
+def glide = [
+        "runtime"     : "com.github.bumptech.glide:glide:$versions.glide",
+        "compile"     : "com.github.bumptech.glide:compiler:$versions.glide",
+        "okHttp3"     : "com.github.bumptech.glide:okhttp3-integration:$versions.glide",
+        "recyclerView": "com.github.bumptech.glide:recyclerview-integration:$versions.glide"
+]
+deps.glide = glide
+
+def materialDialogs = [
+        "core"        : "com.afollestad.material-dialogs:core:$versions.materialDialogs",
+        "input"       : "com.afollestad.material-dialogs:input:$versions.materialDialogs",
+        "files"       : "com.afollestad.material-dialogs:files:$versions.materialDialogs",
+        "color"       : "com.afollestad.material-dialogs:color:$versions.materialDialogs",
+        "lifecycle"   : "com.afollestad.material-dialogs:lifecycle:$versions.materialDialogs",
+        "bottomsheets": "com.afollestad.material-dialogs:bottomsheets:$versions.materialDialogs"
+]
+deps.materialDialogs = materialDialogs
+
+def customView = [
+        "circleImageView" : "de.hdodenhof:circleimageview:$versions.circleImageView",
+        "pinentryedittext": "com.alimuzaffar.lib:pinentryedittext:$versions.pinentryedittext"
+]
+deps.customView = customView
+
+def plugin = [
+        "versions"           : "com.github.ben-manes:gradle-versions-plugin:$versions.libs_version",
+        "androidGradle"      : "com.android.tools.build:gradle:$versions.android_gradle_plugin",
+        "gradleBinary"       : "com.jfrog.bintray.gradle:gradle-bintray-plugin:$versions.gradleBintrayPlugin",
+        "androidMaven"       : "com.github.dcendents:android-maven-gradle-plugin:$versions.androidMavenGradlePlugin",
+        'kotlin'             : "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlin",
+        'kotlinSerialization': "org.jetbrains.kotlin:kotlin-serialization:$versions.kotlin",
+        "navigationSafe"     : "androidx.navigation:navigation-safe-args-gradle-plugin:$versions.navigation",
+        'goolgeService'      : "com.google.gms:google-services:$versions.google_service",
+        'cipher'             : "com.github.MEiDIK:Cipher.so:$versions.cipher",
+        'rust'               : "gradle.plugin.org.mozilla.rust-android-gradle:plugin:$versions.rust"
+]
+deps.plugin = plugin
+
+deps.paging = "androidx.paging:paging-runtime:$versions.paging"
+deps.timber = "com.jakewharton.timber:timber:$versions.timber"
+deps.junit = "junit:junit:$versions.junit"
+deps.hamcrest = "org.hamcrest:hamcrest-all:$versions.hamcrest"
+deps.android_gradle_plugin = "com.android.tools.build:gradle:$versions.android_gradle_plugin"
+deps.roboletric = "org.robolectric:robolectric:$versions.robolectric"
+deps.leackCanary = "com.squareup.leakcanary:leakcanary-android:$versions.leackCanary"
+deps.grgit = "org.ajoberstar:grgit:$versions.grgit"
+deps.lib_versions = "com.github.ben-manes:gradle-versions-plugin:$versions.libs_version"
+deps.javax_inject = "javax.inject:javax.inject:$versions.javaxInject"
+deps.arrow = "com.fernandocejas:arrow:$versions.arrow"
+deps.gson = "com.google.code.gson:gson:$versions.gson"
+deps.bugly = "com.tencent.bugly:crashreport:$versions.bugly"
+//自定义view
+deps.MPAndroidChart = "com.github.PhilJay:MPAndroidChart:$versions.mp_android_chart"
+//recyclervire divider
+deps.flexibledivider = "com.yqritc:recyclerview-flexibledivider:$versions.flexibledivider"
+//图片压缩
+deps.compressor = "id.zelory:compressor:$versions.compressor"
+deps.photopicker = "me.iwf.photopicker:PhotoPicker:$versions.photopicker"
+deps.imagepicker = "com.cysion:ImagePicker:$versions.imagepicker"
+
+deps.bintray = "com.novoda:bintray-release:$versions.bintray"
+deps.flexbox = "com.google.android:flexbox:$versions.flexbox"
+deps.recyclerviewdsl = "cn.edu.twt.retrox:recyclerviewdsl:$versions.recyclerviewdsl"
+deps.androidUtils = "com.blankj:utilcode:$versions.androidUtils"
+deps.pandora = "com.github.whataa:pandora:androidx_v$versions.pandora"
+deps.firebaseMessage = "com.google.firebase:firebase-messaging:$versions.firebaseMessage"
+deps.firebaseId = "com.google.firebase:firebase-iid:$versions.firebaseId"
+deps.commonsCode = "commons-codec:commons-codec:$versions.commonsCode"
+deps.cloudinary = "com.cloudinary:cloudinary-android:$versions.cloudinary"
+deps.permission = "com.yanzhenjie.permission:x:$versions.permission"
+deps.location = "com.mrtan.android:googlelocation:$versions.location"
+deps.PhotoView = "com.github.chrisbanes:PhotoView:$versions.PhotoView"
+ext.deps = deps
+
+def build_versions = [:]
+build_versions.min_sdk = 21
+build_versions.target_sdk = 30
+build_versions.compile_sdk = 30
+ext.build_versions = build_versions
+
+def addGitVersion(String versionName, int versionCode) {
+    build_versions.androidVersionCode = versionCode
+    build_versions.androidVersionName = versionName
+}
+
+ext.addGitVersion = this.&addGitVersion
+
+def addRepos(RepositoryHandler handler) {
+    handler.google()
+    handler.jcenter()
+    handler.mavenCentral()
+    handler.maven { url "https://kotlin.bintray.com/kotlinx" }
+    handler.maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+    handler.maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }
+    handler.maven { url "https://kotlin.bintray.com/kotlinx" }
+    handler.maven { url "https://plugins.gradle.org/m2/" }
+    handler.maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
+    handler.maven { url 'https://jitpack.io' }
+    handler.maven { url "https://dl.bintray.com/drummer-aidan/maven/" }
+    handler.maven { url "$rootDir/../node_modules/react-native/android" }
+    handler.flatDir { dirs 'libs' }
+}
+
+ext.addRepos = this.&addRepos
+

@@ -2,6 +2,7 @@ package com.lzy.imagepicker;
 
 import com.lzy.imagepicker.bean.ImageItem;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,7 +19,7 @@ public class DataHolder {
     public static final String DH_CURRENT_IMAGE_FOLDER_ITEMS = "dh_current_image_folder_items";
 
     private static DataHolder mInstance;
-    private Map<String, List<ImageItem>> data;
+    private Map<String, ArrayList<ImageItem>> data;
 
     public static DataHolder getInstance() {
         if (mInstance == null){
@@ -35,13 +36,13 @@ public class DataHolder {
         data = new HashMap<>();
     }
 
-    public void save(String id, List<ImageItem> object) {
+    public void save(String id, ArrayList<ImageItem> object) {
         if (data != null){
             data.put(id, object);
         }
     }
 
-    public Object retrieve(String id) {
+    public ArrayList<ImageItem> retrieve(String id) {
         if (data == null || mInstance == null){
             throw new RuntimeException("你必须先初始化");
         }

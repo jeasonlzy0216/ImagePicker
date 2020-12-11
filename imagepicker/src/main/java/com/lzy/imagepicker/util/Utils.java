@@ -2,8 +2,10 @@ package com.lzy.imagepicker.util;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.Display;
@@ -72,30 +74,23 @@ public class Utils {
      * 判断手机是否含有虚拟按键  99%
      */
     public static boolean hasVirtualNavigationBar(Context context) {
-        boolean hasSoftwareKeys = true;
+        boolean hasSoftwareKeys;
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            Display d = ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+        Display d = ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
 
-            DisplayMetrics realDisplayMetrics = new DisplayMetrics();
-            d.getRealMetrics(realDisplayMetrics);
+        DisplayMetrics realDisplayMetrics = new DisplayMetrics();
+        d.getRealMetrics(realDisplayMetrics);
 
-            int realHeight = realDisplayMetrics.heightPixels;
-            int realWidth = realDisplayMetrics.widthPixels;
+        int realHeight = realDisplayMetrics.heightPixels;
+        int realWidth = realDisplayMetrics.widthPixels;
 
-            DisplayMetrics displayMetrics = new DisplayMetrics();
-            d.getMetrics(displayMetrics);
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        d.getMetrics(displayMetrics);
 
-            int displayHeight = displayMetrics.heightPixels;
-            int displayWidth = displayMetrics.widthPixels;
+        int displayHeight = displayMetrics.heightPixels;
+        int displayWidth = displayMetrics.widthPixels;
 
-            hasSoftwareKeys = (realWidth - displayWidth) > 0 || (realHeight - displayHeight) > 0;
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-            boolean hasMenuKey = ViewConfiguration.get(context).hasPermanentMenuKey();
-            boolean hasBackKey = KeyCharacterMap.deviceHasKey(KeyEvent.KEYCODE_BACK);
-            hasSoftwareKeys = !hasMenuKey && !hasBackKey;
-        }
-
+        hasSoftwareKeys = (realWidth - displayWidth) > 0 || (realHeight - displayHeight) > 0;
         return hasSoftwareKeys;
     }
 
@@ -105,5 +100,11 @@ public class Utils {
     public static int getNavigationBarHeight(Context context) {
         int resourceId = context.getResources().getIdentifier("navigation_bar_height", "dimen", "android");
         return resourceId > 0 ? context.getResources().getDimensionPixelSize(resourceId) : 0;
+    }
+
+
+    public static boolean canTakePicture(Activity activity){
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        return takePictureIntent.resolveActivity(activity.getPackageManager()) != null;
     }
 }

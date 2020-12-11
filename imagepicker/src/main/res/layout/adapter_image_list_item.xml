@@ -1,48 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    >
 
-    <ImageView
-        android:id="@+id/iv_thumb"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-        android:src="@drawable/ic_default_image" />
+  <ImageView
+      android:id="@+id/iv_thumb"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:scaleType="centerCrop"
+      android:src="@drawable/ic_default_image"
+      />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/ic_cover_shade" />
+  <View
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:background="@drawable/ic_cover_shade"
+      />
 
-    <View
-        android:id="@+id/mask"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#88000000"
-        android:visibility="gone" />
+  <View
+      android:id="@+id/mask"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:background="#88000000"
+      android:visibility="gone"
+      />
 
-    <FrameLayout
-        android:id="@+id/checkView"
+  <FrameLayout
+      android:id="@+id/checkView"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="top|end"
+      android:clickable="true"
+      android:descendantFocusability="blocksDescendants"
+      android:focusable="true"
+      android:paddingBottom="24dp"
+      android:paddingEnd="10dp"
+      android:paddingStart="24dp"
+      android:paddingTop="12dp"
+      >
+
+    <com.lzy.imagepicker.view.SuperCheckBox
+        android:id="@+id/cb_check"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="top|right"
-        android:clickable="true"
-        android:descendantFocusability="blocksDescendants"
-        android:paddingBottom="24dp"
-        android:paddingLeft="24dp"
-        android:paddingRight="10dp"
-        android:paddingTop="12dp">
-
-        <com.lzy.imagepicker.view.SuperCheckBox
-            android:id="@+id/cb_check"
-            style="@style/SuperCheckboxTheme"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:clickable="false"
-            android:duplicateParentState="true"
-            android:enabled="false"
-            android:focusable="false" />
-    </FrameLayout>
+        android:clickable="false"
+        android:duplicateParentState="true"
+        android:enabled="false"
+        android:focusable="false"
+        style="@style/SuperCheckboxTheme"
+        />
+  </FrameLayout>
 </FrameLayout>

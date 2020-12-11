@@ -2,16 +2,15 @@ package com.lzy.imagepickerdemo.wxdemo;
 
 import android.app.Activity;
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-
+import androidx.recyclerview.widget.RecyclerView;
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.bean.ImageItem;
 import com.lzy.imagepickerdemo.R;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +26,7 @@ import java.util.List;
 public class ImagePickerAdapter extends RecyclerView.Adapter<ImagePickerAdapter.SelectedPicViewHolder> {
     private int maxImgCount;
     private Context mContext;
-    private List<ImageItem> mData;
+    private ArrayList<ImageItem> mData;
     private LayoutInflater mInflater;
     private OnRecyclerViewItemClickListener listener;
     private boolean isAdded;   //是否额外添加了最后一个图片
@@ -51,7 +50,7 @@ public class ImagePickerAdapter extends RecyclerView.Adapter<ImagePickerAdapter.
         notifyDataSetChanged();
     }
 
-    public List<ImageItem> getImages() {
+    public ArrayList<ImageItem> getImages() {
         //由于图片未选满时，最后一张显示添加图片，因此这个方法返回真正的已选图片
         if (isAdded) return new ArrayList<>(mData.subList(0, mData.size() - 1));
         else return mData;
@@ -98,7 +97,8 @@ public class ImagePickerAdapter extends RecyclerView.Adapter<ImagePickerAdapter.
                 iv_img.setImageResource(R.drawable.selector_image_add);
                 clickPosition = WxDemoActivity.IMAGE_ITEM_ADD;
             } else {
-                ImagePicker.getInstance().getImageLoader().displayImage((Activity) mContext, item.path, iv_img, 0, 0);
+                Log.i("image path", item.uri.toString());
+                ImagePicker.getInstance().getImageLoader().displayImage((Activity) mContext, item.uri, iv_img, 0, 0);
                 clickPosition = position;
             }
         }

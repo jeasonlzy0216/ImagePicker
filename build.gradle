@@ -1,25 +1,38 @@
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
-
 buildscript {
-    repositories {
-        jcenter()
-    }
+    apply from: "version.gradle"
+    addRepos(repositories)
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.3'
-
-        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7'
-        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
+        classpath deps.plugin.androidGradle
+        classpath deps.plugin.gradleBinary
+        classpath deps.plugin.androidMaven
     }
 }
 
 allprojects {
-    repositories {
-        jcenter()
-    }
+    addRepos(repositories)
 }
 
+subprojects {
+    def isAppModule = it.name == "app"
+    apply plugin: isAppModule ? 'com.android.application' : 'com.android.library'
+    android {
+        compileSdkVersion build_versions.compile_sdk
+        defaultConfig {
+            if (isAppModule) applicationId "com.lzy.imagepickerdemo"
+            minSdkVersion build_versions.min_sdk
+            targetSdkVersion build_versions.target_sdk
+
+            versionCode build_versions.androidVersionCode
+            versionName build_versions.androidVersionName
+            testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+            multiDexEnabled true
+            vectorDrawables.useSupportLibrary = true
+        }
+        lintOptions {
+            abortOnError false
+        }
+    }
+}
 task clean(type: Delete) {
     delete rootProject.buildDir
 }

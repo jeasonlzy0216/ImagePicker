@@ -1,15 +1,15 @@
 package com.lzy.imagepicker.ui;
 
+import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
+import androidx.viewpager.widget.ViewPager;
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.R;
 import com.lzy.imagepicker.util.NavigationBarChangeListener;
@@ -29,7 +29,7 @@ public class ImagePreviewDelActivity extends ImagePreviewBaseActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        ImageView mBtnDel = (ImageView) findViewById(R.id.btn_del);
+        ImageView mBtnDel = findViewById(R.id.btn_del);
         mBtnDel.setOnClickListener(this);
         mBtnDel.setVisibility(View.VISIBLE);
         topBar.findViewById(R.id.btn_back).setOnClickListener(this);
@@ -70,10 +70,10 @@ public class ImagePreviewDelActivity extends ImagePreviewBaseActivity implements
     /** 是否删除此张图片 */
     private void showDeleteDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("提示");
-        builder.setMessage("要删除这张照片吗？");
-        builder.setNegativeButton("取消", null);
-        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+        builder.setTitle(R.string.ip_hint);
+        builder.setMessage(R.string.ip_delete_picture_ask);
+        builder.setNegativeButton(R.string.ip_cancel, null);
+        builder.setPositiveButton(R.string.ip_sure, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 //移除当前图片刷新界面
@@ -94,7 +94,7 @@ public class ImagePreviewDelActivity extends ImagePreviewBaseActivity implements
     public void onBackPressed() {
         Intent intent = new Intent();
         //带回最新数据
-        intent.putExtra(ImagePicker.EXTRA_IMAGE_ITEMS, mImageItems);
+        intent.putParcelableArrayListExtra(ImagePicker.EXTRA_IMAGE_ITEMS, mImageItems);
         setResult(ImagePicker.RESULT_CODE_BACK, intent);
         finish();
         super.onBackPressed();
